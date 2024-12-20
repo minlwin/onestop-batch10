@@ -13,6 +13,8 @@ services:
       - POSTGRES_USER=balance
       - POSTGRES_PASSWORD=balance
       - POSTGRES_DB=balance
+    networks:
+      - balance-net
     ports:
       - 5432:5432
     volumes:
