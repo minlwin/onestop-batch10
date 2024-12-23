@@ -2,6 +2,7 @@ package com.jdc.accounting.domain.entity;
 
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Account {
 	@Column(nullable = false)
 	private Role role;
 	
-	@OneToOne(mappedBy = "account")
+	@OneToOne(mappedBy = "account", cascade = CascadeType.PERSIST)
 	private Member member;
 
 	public enum Role {
