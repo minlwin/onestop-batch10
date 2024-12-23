@@ -25,7 +25,7 @@ public class SecurityTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		var accessToken = request.getHeader("Authentication");
+		var accessToken = request.getHeader("Authorization");
 		
 		if(StringUtils.hasLength(accessToken)) {
 			var authentication = tokenProvider.parse(Type.Access, accessToken);
