@@ -6,13 +6,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdc.accounting.api.input.SignInForm;
 import com.jdc.accounting.api.input.SignUpForm;
-import com.jdc.accounting.api.output.AccountInfo;
+import com.jdc.accounting.api.output.SignUpResult;
 import com.jdc.accounting.domain.entity.Account;
 import com.jdc.accounting.domain.entity.Account.Role;
 import com.jdc.accounting.domain.entity.Member;
 import com.jdc.accounting.domain.repo.AccountRepo;
+import com.jdc.accounting.exceptions.ApiBusinessException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,10 +22,13 @@ public class MemberSignUpService {
 	
 	private final AccountRepo accountRepo;
 	private final PasswordEncoder passwordEncoder;
-	private final TokenManagementService tokenManagementService;
 	
 	@Transactional
-	public AccountInfo signUp(SignUpForm form) {
+	public SignUpResult signUp(SignUpForm form) {
+		
+		if(accountRepo.findOneByEmail(form.email()).isPresent()) {
+			throw new ApiBusinessException("Your email has already been used.");
+		}
 		
 		var entity = new Account();
 		entity.setName(form.name());
@@ -39,10 +42,9 @@ public class MemberSignUpService {
 		member.setAccount(entity);
 		
 		entity.setMember(member);
+		entity = accountRepo.saveAndFlush(entity);
 		
-		accountRepo.saveAndFlush(entity);
-		
-		return tokenManagementService.generate(new SignInForm(form.email(), form.password()));
+		return SignUpResult.from(entity);
 	}
 
 }

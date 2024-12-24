@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 
+import com.jdc.accounting.security.SecurityExceptionHandler;
 import com.jdc.accounting.security.SecurityTokenFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class AccountingApiSecurityConfig {
 	
 	private final SecurityTokenFilter securityTokenFilter;
+	private final SecurityExceptionHandler securityExceptionHandler;
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,6 +39,11 @@ public class AccountingApiSecurityConfig {
 		});
 		
 		http.addFilterAfter(securityTokenFilter, ExceptionTranslationFilter.class);
+		
+		http.exceptionHandling(exception -> {
+			exception.authenticationEntryPoint(securityExceptionHandler);
+			exception.accessDeniedHandler(securityExceptionHandler);
+		});
 		
 		return http.build();
 	}

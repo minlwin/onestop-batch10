@@ -26,7 +26,7 @@ public class ApiUserDetailsService implements UserDetailsService{
 						.authorities(account.getRole().name())
 						.disabled(isDisable(account))
 						.build())
-				.orElseThrow(() -> new UsernameNotFoundException(username));
+				.orElseThrow(() -> new UsernameNotFoundException("Please check your login id."));
 	}
 
 	private boolean isDisable(Account account) {

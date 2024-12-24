@@ -11,6 +11,7 @@ import com.jdc.accounting.api.input.RefreshForm;
 import com.jdc.accounting.api.input.SignInForm;
 import com.jdc.accounting.api.input.SignUpForm;
 import com.jdc.accounting.api.output.AccountInfo;
+import com.jdc.accounting.api.output.SignUpResult;
 import com.jdc.accounting.service.MemberSignUpService;
 import com.jdc.accounting.service.TokenManagementService;
 
@@ -37,7 +38,7 @@ public class SecurityApi {
 	}
 	
 	@PostMapping("signup")
-	AccountInfo signUp(
+	SignUpResult signUp(
 			@Validated @RequestBody SignUpForm form, BindingResult result) {
 		return signUpService.signUp(form);
 	}
