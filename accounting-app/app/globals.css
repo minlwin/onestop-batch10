@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  .form-control {
+    @apply block w-full p-2 border-gray-700 border-solid border-2 rounded-lg;
+  }
+
+  .button {
+    @apply inline-block p-2 border-solid border-2 rounded-lg;
+  }
+
+  .button.primary {
+    @apply bg-gray-600 text-white ;
+  }
+
+  .button.secondary {
+    @apply bg-gray-200 text-black;
+  }
+}
