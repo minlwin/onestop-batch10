@@ -5,8 +5,7 @@ import FormGroup from "@/components/FormGroup";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import axios from 'axios';
-import { useLoginUser } from "@/model/states/LoginUserState";
+import { useApiClient, useLoginUser } from "@/model/states/LoginUserState";
 
 export default function SignInPage() {
 
@@ -19,6 +18,7 @@ export default function SignInPage() {
 
     const [error, setError] = useState<string>('')
     const {setUser} = useLoginUser()
+    const client = useApiClient()
 
     const signIn = async (e:React.FormEvent) => {
 
@@ -36,7 +36,7 @@ export default function SignInPage() {
         }
         
         // Call Sign In API
-        const result = await axios.post('http://localhost:8080/security/signin', model)
+        const result = await client.post('/security/signin', model)
         console.log(result.data)
 
         setUser(result.data)

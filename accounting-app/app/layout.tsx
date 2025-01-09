@@ -1,7 +1,7 @@
 "use client"
 
+import AppProvider from "@/model/states/AppProvider";
 import "./globals.css";
-import { LoginUserProvider } from "@/model/states/LoginUserState";
 
 export default function RootLayout({
   children,
@@ -11,9 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body>
-          <LoginUserProvider>
+          <AppProvider>
             {children}
-          </LoginUserProvider>
+          </AppProvider>
         </body>
     </html>
   );
