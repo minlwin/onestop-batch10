@@ -36,4 +36,12 @@ body {
   .button.secondary {
     @apply bg-gray-200 text-black;
   }
+
+  .navbar-nav > li > a {
+    @apply inline-block mx-2
+  }
+
+  .navbar-nav > li > a.active {
+    @apply text-white
+  }
 }

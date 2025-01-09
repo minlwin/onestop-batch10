@@ -30,7 +30,7 @@ public class TokenManagementService {
 		var authentication = authenticationManager.authenticate(form.authToken());
 		
 		// Get Account Info
-		var account = safeCall(accountRepo.findOneByEmail(form.email()), "There is no account.");
+		var account = safeCall(accountRepo.findOneByEmail(form.email()), "Account", form.email());
 		
 		// Generate Token from Authentication Object
 		return AccountInfo.builder()
@@ -48,7 +48,7 @@ public class TokenManagementService {
 		var authentication = tokenProvider.parse(Type.Refresh, form.refreshToken());
 		
 		// Get Account Info
-		var account = safeCall(accountRepo.findOneByEmail(authentication.getName()), "There is no account.");
+		var account = safeCall(accountRepo.findOneByEmail(authentication.getName()), "Account", authentication.getName());
 		
 		// Generate Token from Authentication Object
 		return AccountInfo.builder()

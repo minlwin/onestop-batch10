@@ -1,7 +1,8 @@
 "use client"
 
 import axios from "axios"
-import { createContext, useContext, useState } from "react"
+import { useRouter } from "next/navigation"
+import { createContext, useContext, useEffect, useState } from "react"
 
 export interface LoginUser {
     name:string
@@ -20,10 +21,25 @@ const LoginUserContext = createContext<LoginUserContextType | undefined>(undefin
 
 export const LoginUserProvider = ({children}:{children:React.ReactNode}) => {
     const [user, setUser] = useState<LoginUser | undefined>()
+    const router = useRouter()
 
     // Restore User from Local Storage
+    useEffect(() => {
+        const userData = localStorage.getItem(userKey)
+        if(userData) {
+            setUser(JSON.parse(userData))
+        }
+    }, []) 
 
     // Save User to Local Storage
+    useEffect(() => {
+        if(user) {
+            localStorage.setItem(userKey, JSON.stringify(user))
+            router.push("/")
+        } else {
+            localStorage.removeItem(userKey)
+        }
+    }, [user])
 
     return (
         <LoginUserContext.Provider value={{user, setUser}}>
@@ -43,6 +59,8 @@ export const useLoginUser = () => {
 }
 
 const baseUrl = 'http://localhost:8080'
+const userKey = 'com.jdc.balance.react.user'
+
 export const useApiClient = () => {
 
     const {user} = useLoginUser()

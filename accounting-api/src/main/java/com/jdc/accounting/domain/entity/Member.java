@@ -1,11 +1,13 @@
 package com.jdc.accounting.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
@@ -26,4 +28,7 @@ public class Member {
 	
 	private LocalDateTime registeredAt;
 	private LocalDateTime activatedAt;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Ledger> ledgers;
 }

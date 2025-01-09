@@ -1,4 +1,4 @@
-export default function FormGroup({label, bottom, children}: FormGroupModel) {
+export default function FormGroup({label, children}: FormGroupModel) {
     
     return (
         <div className="mb-3">
