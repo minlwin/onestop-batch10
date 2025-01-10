@@ -1,6 +1,7 @@
+import { LayoutParam } from '@/model/types'
 import './globals.css'
 
-export default function Layout({children}:{children: Readonly<React.ReactNode>}) {
+export default function Layout({children}:LayoutParam) {
   return (
     <html>
       <body>

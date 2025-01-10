@@ -38,7 +38,7 @@ body {
   }
 
   button, .btn {
-    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+    @apply inline-block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
   }
 
   .btn-wrapper {
@@ -62,4 +62,37 @@ body {
   table > tbody > tr {
     @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700
   }
+
+  .navbar {
+    @apply bg-blue-700 py-4 px-16 flex justify-between items-center
+  }
+
+  .navbar-brand {
+    @apply text-xl text-blue-200 font-bold
+  }
+
+  .navbar-nav {
+    @apply text-blue-300 flex items-center
+  }
+
+  .navbar-nav a {
+    @apply px-2 inline-block
+  }
+
+  .navbar-nav a.active {
+    @apply text-white
+  }
+
+  .profile > img {
+    width: 80vh;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    padding: 4px;
+  }
+
 }

@@ -1,6 +1,7 @@
 import PageTitle from "@/components/PageTitle";
+import { LayoutParam } from "@/model/types";
 
-export default function Layout({children}:{children:React.ReactNode}) {
+export default function Layout({children}:LayoutParam) {
     return (
         <main className="p-6">
             
