@@ -14,7 +14,6 @@ export default function Page() {
 
     const signIn = (form:SignInForm) => {
         console.log(form)
-
         switch(form.password) {
             case "admin":
                 router.push('/manager')
@@ -23,7 +22,6 @@ export default function Page() {
                 router.push('/member')
                 break;
         }
-
     }
 
     return (

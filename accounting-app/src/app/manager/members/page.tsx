@@ -4,7 +4,7 @@ import PageTitle from "@/components/PageTitle";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import Link from "next/link";
 import { useEffect } from "react";
-import { BiRightArrow, BiSend } from "react-icons/bi";
+import { BiRightArrow } from "react-icons/bi";
 
 export default function Page() {
     const {setActiveMenu} = useActiveMenu()
