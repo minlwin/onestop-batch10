@@ -4,7 +4,7 @@ import ActiveMenuProvider, { useActiveMenu } from "@/model/providers/active-menu
 import { LayoutParam } from "@/model/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { act, useEffect } from "react";
+import { useEffect } from "react";
 import { BiDownArrow, BiLogOut, BiPieChart, BiTag, BiUpArrow } from "react-icons/bi";
 
 export default function Layout({children}:LayoutParam) {

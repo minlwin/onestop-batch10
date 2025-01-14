@@ -1,6 +1,6 @@
 'use client'
-import FormGroup from "@/components/FormGroup";
-import PageTitle from "@/components/PageTitle";
+import FormGroup from "@/components/form-group";
+import PageTitle from "@/components/page-title";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import Link from "next/link";
 import { useEffect } from "react";

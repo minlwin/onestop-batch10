@@ -1,7 +1,7 @@
 'use client'
 
-import FormGroup from "@/components/FormGroup";
-import SubTitle from "@/components/SubTitle";
+import FormGroup from "@/components/form-group";
+import SubTitle from "@/components/sub-title";
 import { SignInForm } from "@/model/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

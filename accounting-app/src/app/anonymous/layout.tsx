@@ -1,4 +1,4 @@
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/page-title";
 import { LayoutParam } from "@/model/types";
 
 export default function Layout({children}:LayoutParam) {

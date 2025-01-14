@@ -1,6 +1,6 @@
-import InfoItem from "@/components/InfoItem";
-import PageTitle from "@/components/PageTitle";
-import SubTitle from "@/components/SubTitle";
+import InfoItem from "@/components/info-item";
+import PageTitle from "@/components/page-title";
+import SubTitle from "@/components/sub-title";
 
 export default function Page() {
     return (

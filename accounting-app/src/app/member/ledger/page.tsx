@@ -1,6 +1,6 @@
 'use client'
 
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/page-title";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { useEffect } from "react";
 
