@@ -1,11 +1,11 @@
 'use client'
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
-import { TableView, TableViewModel } from "@/components/table-view";
+import { TableView } from "@/components/table-view";
 import { searchBalance } from "@/model/clients/balance-client";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { BalanceResultProvider, useBalanceResult } from "@/model/providers/balance-search-result.provider";
-import { BalanceInfo, BalanceSearch } from "@/model/types";
+import { BalanceSearch } from "@/model/types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -63,55 +63,50 @@ function ResultList() {
     return (
         <>
             {/* Result Table */}
-            <TableView model={getTableViewModel(result?.contents)} />
+            <TableView columns={COLUMNS} rows={result?.contents || []} />
             {/* Pagination */}
         </>
     )
 }
 
-function getTableViewModel(contents?:BalanceInfo[]):TableViewModel {
-    return {
-        columns: [
-            {
-                name : "ID",
-                fieldName: "id",
-            },
-            {
-                name : "Issue At",
-                fieldName: "issueAt",
-            },
-            {
-                name : "Type",
-                fieldName: "type",
-            },
-            {
-                name : "Ledger Code",
-                fieldName: "ledgerCode",
-            },
-            {
-                name : "Particular",
-                fieldName: "particular",
-            },
-            {
-                name : "Debit",
-                fieldName: "debit",
-                className: 'text-end'
-            },
-            {
-                name : "Credit",
-                fieldName: "credit",
-                className: 'text-end'
-            },
-            {
-                name : "Balance",
-                fieldName: "balance",
-                className: 'text-end'
-            },
-            {
-                fieldName: "id",
-                link: (id:string) => `/member/balance/${id}`
-            },
-        ],
-        rows: contents ?? []
-    }
-}
+const COLUMNS = [
+    {
+        name : "ID",
+        fieldName: "id",
+    },
+    {
+        name : "Issue At",
+        fieldName: "issueAt",
+    },
+    {
+        name : "Type",
+        fieldName: "type",
+    },
+    {
+        name : "Ledger Code",
+        fieldName: "ledgerCode",
+    },
+    {
+        name : "Particular",
+        fieldName: "particular",
+    },
+    {
+        name : "Debit",
+        fieldName: "debit",
+        className: 'text-end'
+    },
+    {
+        name : "Credit",
+        fieldName: "credit",
+        className: 'text-end'
+    },
+    {
+        name : "Balance",
+        fieldName: "balance",
+        className: 'text-end'
+    },
+    {
+        fieldName: "id",
+        link: (id:string) => `/member/balance/${id}`
+    },
+]
