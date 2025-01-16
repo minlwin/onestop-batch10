@@ -1,4 +1,4 @@
-import { BalanceInfo, LedgerEntryDetails, LedgerEntryInfo } from "../types";
+import { BalanceInfo, LedgerEntryDetails, LedgerEntryInfo, LedgerInfo } from "../types";
 
 export const ENTRIES:LedgerEntryDetails[] = [
     {
@@ -64,8 +64,6 @@ export const BALANCES:BalanceInfo[] = ENTRIES.map(entry => {
         balance : rest.type === 'Debit' ? lastBalance - rest.amount : lastBalance + rest.amount} as BalanceInfo
 })
 
-
-
 export const LEDGER_ENTRIES = BALANCES.map(data => {
     const {debit, credit, balance, type, ... commons} = data
     return {
@@ -75,3 +73,42 @@ export const LEDGER_ENTRIES = BALANCES.map(data => {
     } as LedgerEntryInfo 
 })
 
+export const LEDGER : LedgerInfo[] = [
+    {
+        code : "C001", 
+        name : "Service Charges",
+        type : 'Credit',
+        description : "Service Charges for Maintenance",
+        deleted : false,
+        createdAt : "2025-01-16 10:00",
+        modifiedAt : "2025-01-16 10:00"
+    },
+    {
+        code : "C002", 
+        name : "Developing Fields",
+        type : 'Credit',
+        description : "Application Developing Fields",
+        deleted : true,
+        createdAt : "2025-01-16 10:00",
+        modifiedAt : "2025-01-16 10:00"
+    },
+    {
+        code : "C003", 
+        name : "Tution Fees",
+        type : 'Credit',
+        description : "Tution Fees for JDC",
+        deleted : false,
+        createdAt : "2025-01-16 10:00",
+        modifiedAt : "2025-01-16 10:00"
+    },
+    {
+        code : "D001", 
+        name : "General Usage",
+        type : 'Debit',
+        description : "Office Daily Usage",
+        deleted : false,
+        createdAt : "2025-01-16 10:00",
+        modifiedAt : "2025-01-16 10:00"
+    },
+
+]

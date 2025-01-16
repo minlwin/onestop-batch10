@@ -81,14 +81,22 @@ export type LedgerEntrySearchResult = SearchResult<LedgerEntryInfo>
  * Types for Ledger
  */
 export type LedgerSearch = {
-    deleted: boolean
-    code: string
-    keyword: string
-} & PageSearch
+    type?: BalanceType,
+    deleted?: boolean | ""
+    code?: string
+    keyword?: string
+} 
+
+export type LedgerEditForm = {
+    type: BalanceType
+    name: string
+    description: string
+}
 
 export type LedgerInfo = {
     code: string
     name: string
+    type: BalanceType,
     description: string
     createdAt: string
     modifiedAt: string
@@ -96,6 +104,15 @@ export type LedgerInfo = {
 }
 
 export type LedgerSearchResult = SearchResult<LedgerInfo>
+
+export type LedgerDetails = {
+    total : {
+        monthly : number
+        yearly : number
+        all : number
+    }, 
+    
+} & LedgerInfo
 
 /**
  * Ledger Entry Details

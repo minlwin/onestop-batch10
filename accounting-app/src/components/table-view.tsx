@@ -4,7 +4,8 @@ import { BiArrowToRight } from "react-icons/bi"
 export type AppTableColumn = {
     name?:string
     fieldName:string
-    link?:(id:string) => string
+    link? : (id:string) => string
+    convert? : (key:string) => string
     className?:string
 }
 
@@ -27,11 +28,23 @@ export function TableView({columns, rows}: {columns : AppTableColumn[], rows : A
                 <tr key={rowIndex}>
                 {columns.map((col, colIndex) =>(
                     <td className={col.className} key={colIndex}>
-                        {!col.link ? format(row[col.fieldName]) : (
+                        <>
+                        {col.link && (
                             <Link href={col.link(row[col.fieldName])}>
                                 <BiArrowToRight />
                             </Link>
                         )}
+                        </>
+                        <>
+                        {col.convert && (
+                            <span>{col.convert(row[col.fieldName])}</span>
+                        )}
+                        </>
+                        <>
+                        {!col.link && !col.convert && (
+                            <span>{row[col.fieldName]}</span>
+                        )}    
+                        </>
                     </td>
                 ))}    
                 </tr>

@@ -6,7 +6,7 @@ import { searchBalance } from "@/model/clients/balance-client";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { BalanceResultProvider, useBalanceResult } from "@/model/providers/balance-search-result.provider";
 import { BalanceSearch } from "@/model/types";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Page() {
@@ -32,7 +32,6 @@ function SearchForm() {
     
     const search = async (formData:BalanceSearch) => {
         const result = await searchBalance(formData)
-        console.log(result)
         setResult(result)
     }
 
@@ -60,10 +59,18 @@ function SearchForm() {
 
 function ResultList() {
     const {result} = useBalanceResult()
+    const [contents, pagination] = useMemo(() => {
+        if(result) {
+            const {contents, ... pager} = result
+            return [contents, pager]
+        }
+        return []
+    }, [result])
+
     return (
         <>
             {/* Result Table */}
-            <TableView columns={COLUMNS} rows={result?.contents || []} />
+            <TableView columns={COLUMNS} rows={contents || []} />
             {/* Pagination */}
         </>
     )
