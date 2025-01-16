@@ -1,6 +1,7 @@
 import InfoItem from "@/components/info-item";
 import PageTitle from "@/components/page-title";
 import SubTitle from "@/components/sub-title";
+import { Button } from "flowbite-react";
 
 export default function Page() {
     return (
@@ -24,7 +25,7 @@ function Profile({className}: {className?:string}) {
             {/* Profile Image */}
             <div className="mt-4 me-8 profile">
                 <img src="/profile.png" alt="" />
-                <button className="w-full mt-4">De Activate</button>
+                <Button className="w-full mt-4">De Activate</Button>
             </div>
 
         </section>

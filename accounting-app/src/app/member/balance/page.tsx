@@ -6,8 +6,10 @@ import { searchBalance } from "@/model/clients/balance-client";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { BalanceResultProvider, useBalanceResult } from "@/model/providers/balance-search-result.provider";
 import { BalanceSearch } from "@/model/types";
+import { Button, TextInput } from "flowbite-react";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { BiSearch } from "react-icons/bi";
 
 export default function Page() {
     const {setActiveMenu} = useActiveMenu()
@@ -43,15 +45,20 @@ function SearchForm() {
     }, [form])
 
     return (
-        <form className="flex gap-4 my-3" onSubmit={form.handleSubmit(search)}>
+        <form className="search-form" onSubmit={form.handleSubmit(search)}>
             <FormGroup label="Date From">
-                <input type="date" {...form.register('dateFrom')} />
+                <TextInput type="date" {...form.register('dateFrom')} />
             </FormGroup>
             <FormGroup label="Date To">
-                <input type="date" {...form.register('dateTo')} />
+                <TextInput type="date" {...form.register('dateTo')} />
             </FormGroup>
             <div className="btn-wrapper">
-                <button type="submit">Search</button>
+                <Button type="submit">
+                    <div className="flex items-center gap-2">
+                        <BiSearch />
+                        Search
+                    </div>
+                </Button>
             </div>
         </form>
     )

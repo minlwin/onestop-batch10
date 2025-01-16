@@ -1,3 +1,4 @@
+import { Table } from "flowbite-react"
 import Link from "next/link"
 import { BiArrowToRight } from "react-icons/bi"
 
@@ -15,19 +16,18 @@ const format = (value:any) => typeof value === 'number' ? value.toLocaleString()
 
 export function TableView({columns, rows}: {columns : AppTableColumn[], rows : AppTableRow[]}) {
     return (
-        <table>
-            <thead>
-                <tr>
+        <Table hoverable striped>
+            <Table.Head>
                 {columns.map((col, index) => (
-                    <th key={index} className={col.className}>{col.name}</th>
+                    <Table.HeadCell key={index} className={col.className}>{col.name}</Table.HeadCell>
                 ))}
-                </tr>
-            </thead>
-            <tbody>
+            </Table.Head>
+            
+            <Table.Body>
             {rows.map((row, rowIndex) => (
-                <tr key={rowIndex}>
+                <Table.Row key={rowIndex}>
                 {columns.map((col, colIndex) =>(
-                    <td className={col.className} key={colIndex}>
+                    <Table.Cell className={col.className} key={colIndex}>
                         <>
                         {col.link && (
                             <Link href={col.link(row[col.fieldName])}>
@@ -42,14 +42,14 @@ export function TableView({columns, rows}: {columns : AppTableColumn[], rows : A
                         </>
                         <>
                         {!col.link && !col.convert && (
-                            <span>{row[col.fieldName]}</span>
+                            <span>{format(row[col.fieldName])}</span>
                         )}    
                         </>
-                    </td>
+                    </Table.Cell>
                 ))}    
-                </tr>
+                </Table.Row>
             ))}
-            </tbody>
-        </table>
+            </Table.Body>
+        </Table>
     )
 }

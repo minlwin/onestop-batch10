@@ -3,6 +3,7 @@
 import FormGroup from "@/components/form-group";
 import SubTitle from "@/components/sub-title";
 import { SignInForm } from "@/model/types";
+import { Button, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -29,14 +30,14 @@ export default function Page() {
             <SubTitle title="Sign In" />
 
             <FormGroup label="Email" className="my-3">
-                <input className="w-full" type="email" {...register('email', {
+                <TextInput placeholder="Enter email for login" {...register('email', {
                     required: "Please enter email."
                 })} />
-                {errors.email && <span>{errors.email.message}</span>}
+                {errors.email && <span className="error">{errors.email.message}</span>}
             </FormGroup>
 
             <FormGroup label="Password" className="mb-3">
-                <input className="w-full" type="password" {...register('password', {
+                <TextInput type="password" placeholder="Enter Password" {...register('password', {
                     required: "Please enter password.", 
                     minLength: {
                         value: 4,
@@ -46,17 +47,19 @@ export default function Page() {
                         value: 8,
                         message: "Password must be less than 8 digit."
                     }})} />
-                {errors.password && <span>{errors.password.message}</span>}
+                {errors.password && <span className="error">{errors.password.message}</span>}
             </FormGroup>
 
-            <div>
-                <Link className="btn" href={'signup'}>
-                    Sign Up
-                </Link>
+            <div className="flex gap-2">
+                <Button color="teal">
+                    <Link href={'signup'}>
+                        Sign Up
+                    </Link>
+                </Button>
 
-                <button type="submit">
+                <Button type="submit">
                     Sign In
-                </button>
+                </Button>
             </div>
         </form>    
     )

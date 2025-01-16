@@ -28,7 +28,7 @@ type PageSearch = {
     size?:number
 }
 
-type SearchResult<T> = {
+export type SearchResult<T> = {
     contents: T[]
 } & Pager
 

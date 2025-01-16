@@ -9,6 +9,7 @@ import { BiPlus, BiSearch } from "react-icons/bi"
 import Link from "next/link"
 import { useLedgerEntrySearchResult } from "@/model/providers/ledger-entry-search-result.provider"
 import { searchLedgerEntry } from "@/model/clients/ledger-entry-client"
+import { Button, TextInput } from "flowbite-react"
 
 export default function LedgerEntrySearchForm() {
 
@@ -35,31 +36,33 @@ export default function LedgerEntrySearchForm() {
     }, [setResult, setValue, getValues, type])
 
     return (
-        <form onSubmit={handleSubmit(search)} className="flex gap-4 py-3">
+        <form onSubmit={handleSubmit(search)} className="search-form">
             <FormGroup label="Date From">
-                <input type="date" {...register('dateForm')} />
+                <TextInput type="date" {...register('dateForm')} />
             </FormGroup>
             <FormGroup label="Date To">
-                <input type="date" {...register('dateTo')} />
+                <TextInput type="date" {...register('dateTo')} />
             </FormGroup>
             <FormGroup label="Keyword" className="w-1/4">
-                <input {...register('keyword')} placeholder="Search Keyword" />
+                <TextInput {...register('keyword')} placeholder="Search Keyword" />
             </FormGroup>
 
-            <div className="btn-wrapper flex">
-                <button type="submit">
+            <div className="btn-wrapper flex gap-2">
+                <Button type="submit">
                     <div className="flex items-center gap-2">
                         <BiSearch />
                         Search
                     </div>
-                </button>
+                </Button>
 
-                <Link href={`${type?.toLocaleLowerCase()}/create`} className="btn">
-                    <div className="flex items-center gap-2">
-                        <BiPlus />
-                        New Entry
-                    </div>
-                </Link>
+                <Button>
+                    <Link href={`${type?.toLocaleLowerCase()}/create`} className="btn">
+                        <div className="flex items-center gap-2">
+                            <BiPlus />
+                            New Entry
+                        </div>
+                    </Link>
+                </Button>
             </div>
         </form>
     )

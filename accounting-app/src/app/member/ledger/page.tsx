@@ -7,6 +7,7 @@ import { searchLedger } from "@/model/clients/ledger-client";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { LedgerMasterProvider, useLedgerMaster } from "@/model/providers/ledger-master.provider";
 import { LedgerSearch } from "@/model/types";
+import { Button, Select, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -51,29 +52,33 @@ function SearchForm() {
         <form onSubmit={handleSubmit(search)} className="flex gap-4 my-3">
 
             <FormGroup label="Status">
-                <select {...register('deleted')}>
+                <Select {...register('deleted')}>
                     <option value="">All Status</option>
                     <option value="fase">Active</option>
                     <option value="true">Deleted</option>
-                </select>
+                </Select>
             </FormGroup>
 
             <FormGroup label="Leder Code">
-                <input type="text" {...register('code')} placeholder="Search Ledger Code" />
+                <TextInput type="text" {...register('code')} placeholder="Search Ledger Code" />
             </FormGroup>
 
             <FormGroup label="Keyword">
-                <input type="text" {...register('keyword')} placeholder="Search Keyword" />
+                <TextInput type="text" {...register('keyword')} placeholder="Search Keyword" />
             </FormGroup>
 
-            <div className="btn-wrapper flex">
-                <button type="submit" className="flex gap-1 items-center">
-                    <BiSearch /> Search
-                </button>
+            <div className="btn-wrapper flex gap-2">
+                <Button type="submit" >
+                    <div className="flex gap-1 items-center">
+                        <BiSearch /> Search
+                    </div>
+                </Button>
 
-                <Link className="btn flex gap-1 items-center" href="/member/ledger/create/edit"> 
-                    <BiPlus /> Add New Ledger
-                </Link>
+                <Button>
+                    <Link className="btn flex gap-1 items-center" href="/member/ledger/create/edit"> 
+                        <BiPlus /> Add New Ledger
+                    </Link>
+                </Button>
             </div>
         </form>
     )

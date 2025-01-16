@@ -1,3 +1,4 @@
+import { MemberInfo } from "../domains/member.domain";
 import { BalanceInfo, LedgerEntryDetails, LedgerEntryInfo, LedgerInfo } from "../types";
 
 export const ENTRIES:LedgerEntryDetails[] = [
@@ -112,3 +113,16 @@ export const LEDGER : LedgerInfo[] = [
     },
 
 ]
+
+export const MEMBERS : MemberInfo[] = [1, 2, 3, 4, 5].map(item => 
+(
+    {
+        id : `000${item}`,
+        name : `User ${item}`,
+        phone : `09-1111-222${item}`,
+        email : `user000${item}@gmail.com`,
+        activated : true,
+        registeredAt : '2025-01-15 10:00',
+        modifiedAt : '2025-01-15 15:00'
+    } 
+))

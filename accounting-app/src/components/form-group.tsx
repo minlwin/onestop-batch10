@@ -1,7 +1,9 @@
+import { Label } from "flowbite-react"
+
 export default function FormGroup({children, label, className} :FormGroupType) {
     return (
         <div className={className}>
-            <label className="block mb-1">{label}</label>
+            <Label className="text-cyan-700">{label}</Label>
             <div>
             {children}
             </div>

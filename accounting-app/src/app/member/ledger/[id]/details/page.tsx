@@ -4,7 +4,7 @@ import PageTitle from "@/components/page-title";
 import { findLedgerByCode } from "@/model/clients/ledger-client";
 import { LedgerDetails } from "@/model/types";
 import Link from "next/link";
-import { use, useEffect, useMemo, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { BiPencil, BiTrash } from "react-icons/bi";
 
 export default function Page({params} : {params : Promise<{id : string}>}) {
