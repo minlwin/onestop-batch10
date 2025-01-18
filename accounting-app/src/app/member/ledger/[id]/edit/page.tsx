@@ -1,12 +1,12 @@
 'use client'
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
-import { createLedger, updateLedger } from "@/model/clients/ledger-client";
+import { createLedger, findLedgerByCode, updateLedger } from "@/model/clients/ledger-client";
 import { LedgerEditForm } from "@/model/domains/ledger.domain";
 import { BalanceTypes } from "@/model/domains/types";
 import { Button, Select, Textarea, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import { use, useMemo } from "react";
+import { use, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { BiSave } from "react-icons/bi";
 
@@ -19,15 +19,28 @@ export default function Page({params} : {params : Promise<{id : string}>} ) {
     const {
         register, 
         handleSubmit,
+        setValue,
         formState : { errors }
     } = useForm<LedgerEditForm>()
+
+    useEffect(() => {
+        if(id) {
+            const loadData = async () => {
+                const {type, name, description} = await findLedgerByCode(id)
+                setValue('type', type)
+                setValue('name', name)
+                setValue('description', description)
+            }
+            loadData()
+        }
+    }, [id])
 
     const save = async (formData : LedgerEditForm) => {
         const result = (id === 'create') 
             ? await createLedger(formData)
             : await updateLedger(id, formData)
 
-        router.replace(`/member/ledger/${result}/details`)
+        router.replace(`/member/ledger/${result.code}/details`)
     }
 
     return (
