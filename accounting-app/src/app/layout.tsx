@@ -1,4 +1,4 @@
-import { LayoutParam } from '@/model/types'
+import { LayoutParam } from '@/model/domains/types'
 import './globals.css'
 
 export default function Layout({children}:LayoutParam) {

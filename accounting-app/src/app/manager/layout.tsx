@@ -1,7 +1,7 @@
 'use client'
 
 import ActiveMenuProvider, { useActiveMenu } from "@/model/providers/active-menu.provider";
-import { LayoutParam } from "@/model/types";
+import { LayoutParam } from "@/model/domains/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

@@ -2,7 +2,7 @@
 
 import FormGroup from "@/components/form-group";
 import SubTitle from "@/components/sub-title";
-import { SignInForm } from "@/model/types";
+import { SignInForm } from "@/model/domains/anonymous.domain";
 import { Button, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

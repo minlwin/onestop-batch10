@@ -1,5 +1,5 @@
 import { BalanceTypeProvider } from "@/model/providers/balance-type.provider";
-import { LayoutParam } from "@/model/types";
+import { LayoutParam } from "@/model/domains/types";
 
 export default function Layout({children}:LayoutParam) {
     return (

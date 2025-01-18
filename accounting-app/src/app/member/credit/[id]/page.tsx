@@ -1,23 +1,21 @@
 'use client'
 import PageTitle from "@/components/page-title";
 import { useBalanceType } from "@/model/providers/balance-type.provider";
-import { LedgerEntryDetailsProvider } from "@/model/providers/ledger-entry-details.provider";
-import { PathParam } from "@/model/types";
+import { PathParam } from "@/model/domains/types";
 import { getEntryEditTitle } from "@/model/utils";
-import { use, useEffect } from "react";
+import { use, useMemo } from "react";
+import LedgerEntryEdit from "@/components/ledger-entry-edit";
 
 export default function Page({params}:PathParam<{id: string}>) {
 
     const {id} = use(params)
     const {type} = useBalanceType()
-
-    useEffect(() => {
-        // Load Data
-    }, [id])
+    const idParam = useMemo(() => id === 'create' ? undefined : id, [id])
 
     return (
-        <LedgerEntryDetailsProvider>
+        <>
             <PageTitle title={getEntryEditTitle(id, type)} />
-        </LedgerEntryDetailsProvider>
+            <LedgerEntryEdit id={idParam} type={type} />
+        </>
     )
 }

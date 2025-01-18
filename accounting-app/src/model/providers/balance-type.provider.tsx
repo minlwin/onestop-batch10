@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from "react"
-import { BalanceType, ProviderParam } from "../types"
+import { BalanceType, ProviderParam } from "../domains/types"
 
 type BalanceTypeContextType = {
     type?: BalanceType

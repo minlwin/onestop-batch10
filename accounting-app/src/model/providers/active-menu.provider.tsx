@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { ProviderParam } from "../types"
+import { ProviderParam } from "../domains/types"
 
 export default function ActiveMenuProvider({children} : ProviderParam) {
     const [activeMenu, setActiveMenu] = useState<string | undefined>()

@@ -1,4 +1,5 @@
-import { BalanceSearch, BalanceSearchResult, LedgerEntryDetails } from "../types";
+import { BalanceSearch, BalanceSearchResult } from "../domains/balances.domain";
+import { LedgerEntryDetails } from "../domains/ledger-entry.domain";
 import { BALANCES, ENTRIES } from "./utils";
 
 export async function searchBalance(form : BalanceSearch):Promise<BalanceSearchResult> {
@@ -12,5 +13,5 @@ export async function searchBalance(form : BalanceSearch):Promise<BalanceSearchR
 }
 
 export async function findBalanceById(id : string):Promise<LedgerEntryDetails | undefined> {
-    return ENTRIES.filter(a => a.id === id).shift()
+    return ENTRIES[0]
 }

@@ -9,6 +9,7 @@ import { MemberSearchResultProvider, useMemberSearchResult } from "@/model/provi
 import { Button, Select, TextInput } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { BiSearch } from "react-icons/bi";
 
 export default function Page() {
     const {setActiveMenu} = useActiveMenu()
@@ -39,7 +40,7 @@ function SearchForm() {
     }, [getValues])
     return (
         <form onSubmit={handleSubmit(search)} className="search-form">
-            <FormGroup label="Active State">
+            <FormGroup label="Active State" className="w-1/6">
                 <Select {...register('activated')}>
                     <option value="">All</option>
                     <option value="true">Activated</option>
@@ -47,13 +48,15 @@ function SearchForm() {
                 </Select>
             </FormGroup>
 
-            <FormGroup label="Keyword">
+            <FormGroup label="Keyword" className="w-1/5">
                 <TextInput {...register('activated')} type="text" placeholder="Search Keyword" />
             </FormGroup>
 
             <div className="btn-wrapper">
                 <Button type="submit">
-                    Search
+                    <div className="flex items-center gap-1">
+                        <BiSearch /> Search
+                    </div>
                 </Button>
             </div>
         </form>
@@ -83,7 +86,7 @@ const COLUMNS : AppTableColumn[] = [
     {
         fieldName : 'activated',
         name : 'Status',
-        convert: (key) => key ? 'Activated' : 'Applied'
+        convert: (key) => key[0] ? 'Activated' : 'Applied'
     },
     {
         fieldName : 'registeredAt',

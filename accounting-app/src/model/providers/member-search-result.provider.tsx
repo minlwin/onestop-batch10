@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react"
 import { MemberSearchResult } from "../domains/member.domain"
-import { ProviderParam } from "../types"
+import { ProviderParam } from "../domains/types"
 
 type MemberSearchResultContextType = {
     result? : MemberSearchResult

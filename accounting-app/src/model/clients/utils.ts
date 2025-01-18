@@ -1,10 +1,13 @@
-import { MemberInfo } from "../domains/member.domain";
-import { BalanceInfo, LedgerEntryDetails, LedgerEntryInfo, LedgerInfo } from "../types";
+import { BalanceInfo } from "../domains/balances.domain";
+import { LedgerEntryDetails, LedgerEntryInfo } from "../domains/ledger-entry.domain";
+import { LedgerInfo } from "../domains/ledger.domain";
+import { MemberAccessInfo, MemberInfo } from "../domains/member.domain";
 
 export const ENTRIES:LedgerEntryDetails[] = [
     {
         id: "20250114-00001",
         issueAt: '2025-01-14 10:00',
+        useDate : '2025-01-14',
         type: 'Credit',
         ledgerCode: 'C0001',
         ledgerName: 'Maintenance Fees',
@@ -13,24 +16,23 @@ export const ENTRIES:LedgerEntryDetails[] = [
         lastBalance: 100000,
         items: [
             {
-                seqNumber: 1,
                 itemName: 'IC Chips',
                 quantity: 4,
                 unitPrice: 10000,
-                description: 'EC101-001'
+                total : 40000,
             },
             {
-                seqNumber: 2,
                 itemName: 'Transportation Fees',
                 quantity: 2,
                 unitPrice: 5000,
-                description: 'Two way taxi fees'
+                total : 10000,
             }
         ]
     },
     {
         id: "20250114-00002",
         issueAt: '2025-01-14 10:00',
+        useDate : '2025-01-14',
         type: 'Debit',
         ledgerCode: 'D0001',
         ledgerName: 'Office Usage',
@@ -39,18 +41,16 @@ export const ENTRIES:LedgerEntryDetails[] = [
         lastBalance: 150000,
         items: [
             {
-                seqNumber: 1,
                 itemName: 'A4 Paper',
                 quantity: 4,
                 unitPrice: 5000,
-                description: '500 Sheet Pack'
+                total : 20000,
             },
             {
-                seqNumber: 2,
                 itemName: 'Transportaion Fees',
                 quantity: 1,
                 unitPrice: 5000,
-                description: 'Taxi for taking to office'
+                total : 5000,
             },
         ]
     }
@@ -125,4 +125,15 @@ export const MEMBERS : MemberInfo[] = [1, 2, 3, 4, 5].map(item =>
         registeredAt : '2025-01-15 10:00',
         modifiedAt : '2025-01-15 15:00'
     } 
+))
+
+export const MEMBER_ACCESSES : MemberAccessInfo [] = [1 , 2, 3, 4, 5].map(item => (
+    {
+        id : `${item}`,
+        accessAt : `2025-01-16 10:${item}0`,
+        endAt : `2025-01-16 10:${item}5`,
+        activity: `Activity ${item}`,
+        status : 'Success', 
+        message : `Message ${item}`
+    }
 ))

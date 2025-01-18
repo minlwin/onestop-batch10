@@ -1,5 +1,7 @@
+'use client'
 import { createContext, useContext, useState } from "react"
-import { LedgerInfo, ProviderParam } from "../types"
+import { ProviderParam } from "../domains/types"
+import { LedgerInfo } from "../domains/ledger.domain"
 
 type LedgerMasterContextType = {
     list : LedgerInfo[]

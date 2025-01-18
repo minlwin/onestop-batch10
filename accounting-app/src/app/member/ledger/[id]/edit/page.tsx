@@ -2,7 +2,8 @@
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
 import { createLedger, updateLedger } from "@/model/clients/ledger-client";
-import { BalanceTypes, LedgerEditForm } from "@/model/types";
+import { LedgerEditForm } from "@/model/domains/ledger.domain";
+import { BalanceTypes } from "@/model/domains/types";
 import { Button, Select, Textarea, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { use, useMemo } from "react";
@@ -64,7 +65,7 @@ export default function Page({params} : {params : Promise<{id : string}>} ) {
                 <div className="pt-1">
                     <Button type="submit" >
                        <div className="flex items-center gap-1">
-                           <BiSave /> Save Ledger
+                            <BiSave /> Save Ledger
                        </div>
                     </Button>
                 </div>

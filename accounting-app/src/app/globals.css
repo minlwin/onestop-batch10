@@ -53,16 +53,10 @@ body {
     @apply text-white
   }
 
-  .profile > img {
-    width: 80vh;
-    height: 200px;
+  #profile  img {
+    height: 300px;
     object-fit: cover;
-    object-position: center;
-    border-radius: 8px;
-    border-color: gray;
-    border-style: solid;
-    border-width: 1px;
-    padding: 4px;
+    object-position: top;
   }
 
 }

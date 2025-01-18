@@ -1,7 +1,8 @@
 'use client'
 
 import { createContext, useContext, useState } from "react"
-import { BalanceSearchResult, ProviderParam } from "../types"
+import { ProviderParam } from "../domains/types"
+import { BalanceSearchResult } from "../domains/balances.domain"
 
 type BalanceResultContextType = {
     result?: BalanceSearchResult

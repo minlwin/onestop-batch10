@@ -1,7 +1,6 @@
 'use client'
 
 import { useBalanceType } from "@/model/providers/balance-type.provider"
-import { LedgerEntrySearch } from "@/model/types"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import FormGroup from "./form-group"
@@ -10,6 +9,7 @@ import Link from "next/link"
 import { useLedgerEntrySearchResult } from "@/model/providers/ledger-entry-search-result.provider"
 import { searchLedgerEntry } from "@/model/clients/ledger-entry-client"
 import { Button, TextInput } from "flowbite-react"
+import { LedgerEntrySearch } from "@/model/domains/ledger-entry.domain"
 
 export default function LedgerEntrySearchForm() {
 

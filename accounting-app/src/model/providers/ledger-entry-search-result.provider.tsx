@@ -1,7 +1,8 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
-import { LedgerEntrySearchResult, ProviderParam } from '../types'
+import { ProviderParam } from '../domains/types'
+import { LedgerEntrySearchResult } from '../domains/ledger-entry.domain'
 
 type LedgerEntryResultContextType = {
     result?: LedgerEntrySearchResult
