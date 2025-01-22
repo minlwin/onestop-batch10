@@ -12,6 +12,6 @@ export async function searchBalance(form : BalanceSearch):Promise<BalanceSearchR
     }
 }
 
-export async function findBalanceById(id : string):Promise<LedgerEntryDetails | undefined> {
+export async function findBalanceById(id : string):Promise<LedgerEntryDetails> {
     return ENTRIES[0]
 }

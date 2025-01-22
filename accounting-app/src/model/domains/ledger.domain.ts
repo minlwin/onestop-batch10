@@ -1,4 +1,4 @@
-import { BalanceType, SearchResult } from "./types"
+import { BalanceType } from "./types"
 
 /**
  * Types for Ledger
@@ -26,13 +26,3 @@ export type LedgerInfo = {
     deleted : boolean
 }
 
-export type LedgerSearchResult = SearchResult<LedgerInfo>
-
-export type LedgerDetails = {
-    total : {
-        monthly : number
-        yearly : number
-        all : number
-    }, 
-    
-} & LedgerInfo

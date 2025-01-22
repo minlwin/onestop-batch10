@@ -1,4 +1,4 @@
-import { LedgerSearch, LedgerInfo, LedgerEditForm, LedgerDetails } from "../domains/ledger.domain";
+import { LedgerSearch, LedgerInfo, LedgerEditForm } from "../domains/ledger.domain";
 import { LEDGER } from "./utils";
 
 export async function searchLedger(form : LedgerSearch) : Promise<LedgerInfo[]> {
