@@ -5,6 +5,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.jdc.accounting.domain.consts.BalanceType;
+import com.jdc.accounting.domain.entity.LedgerEntry;
+
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 public record LedgerEntryInfo(
     String id,
@@ -16,4 +20,10 @@ public record LedgerEntryInfo(
     String particular,
     BigDecimal amount,
     BigDecimal lastBalance
-) {}
+) {
+
+	public static void select(CriteriaQuery<LedgerEntryInfo> cq, Root<LedgerEntry> root) {
+		// TODO Auto-generated method stub
+		
+	}
+}

@@ -1,10 +1,12 @@
-package com.jdc.accounting.exceptions;
+package com.jdc.accounting.aspects;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.BindingResult;
+
+import com.jdc.accounting.exceptions.ApiValidationException;
 
 @Aspect
 @Configuration

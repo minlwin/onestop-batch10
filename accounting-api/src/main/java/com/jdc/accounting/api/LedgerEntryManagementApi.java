@@ -16,27 +16,38 @@ import com.jdc.accounting.api.input.LedgerEntrySearch;
 import com.jdc.accounting.api.output.DataModificationResult;
 import com.jdc.accounting.api.output.LedgerEntryInfo;
 import com.jdc.accounting.api.output.PageResult;
+import com.jdc.accounting.aspects.AccessInfo;
+import com.jdc.accounting.domain.embeddable.LedgerEntryPk;
+import com.jdc.accounting.service.LedgerEntryService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("entries")
 public class LedgerEntryManagementApi {
+	
+	private final LedgerEntryService service;
 
 	@GetMapping
+	@AccessInfo("Search Ledger Entry")
 	PageResult<LedgerEntryInfo> search(LedgerEntrySearch search, 
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {
-		return null;
+		return service.search(search, page, size);
 	}
 	
 	@PostMapping
-	DataModificationResult<?> create(
+	@AccessInfo("Create Ledger Entry")
+	DataModificationResult<LedgerEntryPk> create(
 			@Validated @RequestBody LedgerEntryForm form, BindingResult result) {
-		return null;
+		return service.create(form);
 	}
 	
 	@PutMapping("{id}")
-	DataModificationResult<?> update(@PathVariable String id,
+	@AccessInfo("Update Ledger Entry")
+	DataModificationResult<LedgerEntryPk> update(@PathVariable String id,
 			@Validated @RequestBody LedgerEntryForm form, BindingResult result) {
-		return null;
+		return service.update(id, form);
 	}	
 }

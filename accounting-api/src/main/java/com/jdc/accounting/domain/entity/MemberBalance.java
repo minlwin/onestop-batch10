@@ -20,5 +20,5 @@ public class MemberBalance {
 	@OneToOne(optional = false)
 	private Member member;
 	
-	private BigDecimal balance;
+	private BigDecimal balance = BigDecimal.ZERO;
 }

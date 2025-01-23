@@ -11,14 +11,17 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Embeddable
-@AllArgsConstructor
 @NoArgsConstructor
-public class LedgerEntryPk {
+@AllArgsConstructor
+public class LedgerEntrySeqPk {
 
 	@Column(name = "member_id")
 	private UUID memberId;
 	@Column(name = "use_date")
 	private LocalDate useDate;
-	@Column(name = "seq_number")
-	private int seqNumber;
+	
+	public static LedgerEntrySeqPk from(UUID id, LocalDate now) {
+		return new LedgerEntrySeqPk(id, now);
+	}
+
 }

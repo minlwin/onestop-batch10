@@ -18,6 +18,7 @@ import com.jdc.accounting.api.input.MemberStatusForm;
 import com.jdc.accounting.api.output.MemberAccessInfo;
 import com.jdc.accounting.api.output.MemberInfo;
 import com.jdc.accounting.api.output.PageResult;
+import com.jdc.accounting.service.MemberAccessService;
 import com.jdc.accounting.service.MemberManagementService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,22 +28,23 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/members")
 public class MemberManagementApi {
 
-	private final MemberManagementService service;
+	private final MemberManagementService managemetService;
+	private final MemberAccessService accessService;
 	
 	@GetMapping
 	List<MemberInfo> search(MemberSearch form) {
-		return service.search(form);
+		return managemetService.search(form);
 	}
 	
 	@PutMapping("{id}")
 	MemberInfo updateStatus(String id, 
 			@Validated @RequestBody MemberStatusForm form, BindingResult result) {
-		return service.update(id, form);
+		return managemetService.update(id, form);
 	}
 	
 	@GetMapping("{id}")
 	MemberInfo findById(@PathVariable String id) {
-        return null;
+        return managemetService.findById(id);
     }
 	
 	@GetMapping("{id}/access")
@@ -50,7 +52,7 @@ public class MemberManagementApi {
 			MemberAccessSearch form,
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {
-		return null;
+		return accessService.search(form, page, size);
 	}
 	
 }

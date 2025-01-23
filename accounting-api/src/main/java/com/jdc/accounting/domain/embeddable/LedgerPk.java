@@ -19,4 +19,12 @@ public class LedgerPk {
 	
 	@Column(name = "seq_number")
 	private int seqNumber;
+	
+	public String getCode() {
+		return "%04d".formatted(seqNumber);
+	}
+
+	public static LedgerPk from(UUID id, String seq) {
+		return new LedgerPk(id, Integer.parseInt(seq));
+	}
 }

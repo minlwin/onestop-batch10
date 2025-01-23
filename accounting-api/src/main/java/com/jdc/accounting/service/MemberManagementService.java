@@ -54,4 +54,10 @@ public class MemberManagementService {
 		return MemberInfo.from(member);
 	}
 
+	@Transactional(readOnly = true)
+	public MemberInfo findById(String id) {
+		return safeCall(repo.findById(UUID.fromString(id))
+				.map(MemberInfo::from), "Member", id);
+	}
+
 }

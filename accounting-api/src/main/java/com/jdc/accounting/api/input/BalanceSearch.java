@@ -1,5 +1,9 @@
 package com.jdc.accounting.api.input;
 
-public record BalanceSearch() {
+import java.time.LocalDate;
+
+public record BalanceSearch(
+		LocalDate dateFrom,
+		LocalDate dateTo) {
 
 }

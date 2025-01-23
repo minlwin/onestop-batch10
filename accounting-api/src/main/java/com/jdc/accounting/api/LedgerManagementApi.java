@@ -16,30 +16,42 @@ import com.jdc.accounting.api.input.LedgerForm;
 import com.jdc.accounting.api.input.LedgerSearch;
 import com.jdc.accounting.api.output.DataModificationResult;
 import com.jdc.accounting.api.output.LedgerInfo;
+import com.jdc.accounting.aspects.AccessInfo;
+import com.jdc.accounting.domain.embeddable.LedgerPk;
+import com.jdc.accounting.service.LedgerManagementService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("ledger")
 public class LedgerManagementApi {
+	
+	private final LedgerManagementService service;
 
 	@GetMapping
+	@AccessInfo("Search Ledger")
 	List<LedgerInfo> search(LedgerSearch form) {
-		return null;
+		return service.search(form);
 	}
 	
 	@PostMapping
-	DataModificationResult<String> create(
+	@AccessInfo("Create Ledger")
+	DataModificationResult<LedgerPk> create(
 			@Validated @RequestBody LedgerForm form, BindingResult result) {
-		return null;
+		return service.create(form);
 	}
 	
 	@PutMapping("{id}")
-	DataModificationResult<String> update(@PathVariable String id, 
+	@AccessInfo("Update Ledger")
+	DataModificationResult<LedgerPk> update(@PathVariable String id, 
 			@Validated @RequestBody LedgerForm form, BindingResult result) {
-		return null;
+		return service.update(id, form);
 	}
 	
 	@GetMapping("{id}")
+	@AccessInfo("Find Ledger by id")
 	LedgerInfo findById(String id) {
-		return null;
+		return service.findById(id);
 	}
 }

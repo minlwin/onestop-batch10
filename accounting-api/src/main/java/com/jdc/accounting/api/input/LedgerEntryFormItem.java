@@ -9,6 +9,6 @@ public record LedgerEntryFormItem(
 	@NotBlank(message = "Please enter item name.")
     String itemName,
     @NotNull(message = "Please enter quantity.")
-    BigDecimal quantity,
+    Integer quantity,
     @NotNull(message = "Please enter unit price.")
     BigDecimal unitPrice) {}
