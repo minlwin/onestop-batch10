@@ -46,5 +46,4 @@ public record LedgerInfo(
 				entity.getUpdatedAt(), 
 				entity.isDeleted());
 	}
-
 }

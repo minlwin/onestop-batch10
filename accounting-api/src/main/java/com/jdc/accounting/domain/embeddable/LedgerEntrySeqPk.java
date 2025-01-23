@@ -1,5 +1,6 @@
 package com.jdc.accounting.domain.embeddable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -13,10 +14,13 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class LedgerEntrySeqPk {
+public class LedgerEntrySeqPk implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "member_id")
 	private UUID memberId;
+	
 	@Column(name = "use_date")
 	private LocalDate useDate;
 	

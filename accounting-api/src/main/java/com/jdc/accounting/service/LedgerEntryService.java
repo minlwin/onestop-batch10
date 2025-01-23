@@ -74,7 +74,7 @@ public class LedgerEntryService {
 		for(var i = 0; i < items.size(); i ++) {
 			var item = items.get(i);
 			var entity = new LedgerEntryItem();
-			entity.setId(new LedgerEntryItemPk(entry.getId(), i + 1));
+			entity.setId(LedgerEntryItemPk.from(entry.getId(), i + 1));
 			entity.setItemName(item.itemName());
 			entity.setQuantity(item.quantity());
 			entity.setUnitPrice(item.unitPrice());
