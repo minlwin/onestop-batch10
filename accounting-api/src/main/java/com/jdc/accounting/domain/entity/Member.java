@@ -27,4 +27,7 @@ public class Member {
 	private LocalDateTime registeredAt;
 	private LocalDateTime activatedAt;
 	
+	@OneToOne(mappedBy = "member")
+	private MemberBalance balance;
+	
 }
