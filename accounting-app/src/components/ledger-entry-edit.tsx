@@ -87,13 +87,12 @@ export default function LedgerEntryEdit({id, type} : LedgerEntry) {
     const save = async (formData:LedgerEntryForm) => {
         const result = id ? await updateLedgerEntry(id, formData) 
             : await createLedgerEntry(formData)
-        router.replace(`/member/balance/${result.id}`)
+        router.replace(`/member/balance/${result.id.code}`)
     }
 
     const setTotal = (index : number) => {
         const quantity = form.getValues('items')[index].quantity || 0
         const unitPrice = form.getValues('items')[index].unitPrice || 0
-        console.log(`${index} : ${quantity * unitPrice}`)
         form.setValue(`items.${index}.total`, quantity * unitPrice)
     }
 

@@ -14,7 +14,9 @@ import com.jdc.accounting.api.input.MemberStatusForm;
 import com.jdc.accounting.api.output.MemberInfo;
 import com.jdc.accounting.api.output.PageResult;
 import com.jdc.accounting.domain.entity.Member;
+import com.jdc.accounting.domain.entity.MemberBalance;
 import com.jdc.accounting.domain.entity.Member_;
+import com.jdc.accounting.domain.repo.MemberBalanceRepo;
 import com.jdc.accounting.domain.repo.MemberRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -25,18 +27,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberManagementService {
 	
-	private final MemberRepo repo;
+	private final MemberRepo memberRepo;
+	private final MemberBalanceRepo balanceRepo;
 
 	@Transactional
 	public MemberInfo update(String id, MemberStatusForm form) {
 		
-		var member = safeCall(repo.findById(UUID.fromString(id)), "Member", id);
+		var member = safeCall(memberRepo.findById(UUID.fromString(id)), "Member", id);
 		
 		member.setActivated(form.status());
-		if(form.status()) {
-			member.setActivatedAt(LocalDateTime.now());
-		} else {
-			member.setActivatedAt(null);
+		member.setActivatedAt(form.status() ? LocalDateTime.now() : null);
+		
+		if(member.isActivated()) {
+			var balance = new MemberBalance();
+			balance.setMember(member);
+			balanceRepo.save(balance);
 		}
 		
 		return MemberInfo.from(member);
@@ -44,13 +49,13 @@ public class MemberManagementService {
 
 	@Transactional(readOnly = true)
 	public MemberInfo findById(String id) {
-		return safeCall(repo.findById(UUID.fromString(id))
+		return safeCall(memberRepo.findById(UUID.fromString(id))
 				.map(MemberInfo::from), "Member", id);
 	}
 
 	@Transactional(readOnly = true)
 	public PageResult<MemberInfo> search(MemberSearch form, int page, int size) {
-		return repo.search(queryFunc(form), countFunc(form), page, size);
+		return memberRepo.search(queryFunc(form), countFunc(form), page, size);
 	}
 
 	private Function<CriteriaBuilder, CriteriaQuery<MemberInfo>> queryFunc(MemberSearch form) {

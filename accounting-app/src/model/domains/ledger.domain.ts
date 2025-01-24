@@ -26,3 +26,10 @@ export type LedgerInfo = {
     deleted : boolean
 }
 
+export type LedgerModificationResult = {
+    id : {
+        code : string
+        [key : string] : any
+    }
+}
+

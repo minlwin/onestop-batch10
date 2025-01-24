@@ -1,9 +1,10 @@
 'use client'
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
-import { TableView } from "@/components/table-view";
+import { AppTableColumn, TableView } from "@/components/table-view";
 import { searchBalance } from "@/model/clients/balance-client";
 import { BalanceSearch } from "@/model/domains/balances.domain";
+import { BalanceType } from "@/model/domains/types";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { BalanceResultProvider, useBalanceResult } from "@/model/providers/balance-search-result.provider";
 import { Button, TextInput } from "flowbite-react";
@@ -83,44 +84,23 @@ function ResultList() {
     )
 }
 
-const COLUMNS = [
-    {
-        name : "ID",
-        fieldName: "id",
-    },
-    {
-        name : "Issue At",
-        fieldName: "issueAt",
-    },
-    {
-        name : "Type",
-        fieldName: "type",
-    },
-    {
-        name : "Ledger Code",
-        fieldName: "ledgerCode",
-    },
-    {
-        name : "Particular",
-        fieldName: "particular",
-    },
-    {
-        name : "Debit",
-        fieldName: "debit",
-        className: 'text-end'
-    },
-    {
-        name : "Credit",
-        fieldName: "credit",
-        className: 'text-end'
-    },
-    {
-        name : "Balance",
-        fieldName: "balance",
-        className: 'text-end'
-    },
-    {
-        fieldName: "id",
-        link: (id:string) => `/member/balance/${id}`
-    },
+const COLUMNS : AppTableColumn[] = [
+    { name : "ID", fieldName: "id" },
+    { name : "Issue At", fieldName: "issueAt" },
+    { name : "Type", fieldName: "type" },
+    { name : "Ledger", fieldName: "ledgerCode,ledgerName", convert : (key) => `${key[0]} : ${key[1]}`  },
+    { name : "Particular", fieldName: "particular" },
+    { name : "Debit", fieldName: "debit", className: 'text-end' },
+    { name : "Credit", fieldName: "credit", className: 'text-end' },
+    { name : "Balance", fieldName: "type,lastBalance,credit,debit", className: 'text-end', convert : (key) => calculate(key[0], key[1], key[2], key[3]) },
+    { fieldName: "id", link: (id:string) => `/member/balance/${id}` },
 ]
+
+function calculate(type : BalanceType, lastBalnce : number, credit : number, debit : number) {
+    console.log(`Balance Type  : ${type}`)
+    console.log(`Last Balance  : ${lastBalnce}`)
+    console.log(`Credit        : ${credit}`)
+    console.log(`Debit         : ${debit}`)
+
+    return type === 'Credit' ? (lastBalnce + credit) : (lastBalnce - debit)
+}

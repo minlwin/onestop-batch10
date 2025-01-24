@@ -42,10 +42,10 @@ public record BalanceInfo(
 			root.get(LedgerEntry_.ledger).get(Ledger_.name),
 			root.get(LedgerEntry_.particular),
 			cb.selectCase()
-				.when(cb.equal(root.get(LedgerEntry_.ledger).get(Ledger_.type), BalanceType.Credit), root.get(LedgerEntry_.amount))
+				.when(cb.equal(root.get(LedgerEntry_.ledger).get(Ledger_.type), BalanceType.Debit), root.get(LedgerEntry_.amount))
 				.otherwise(cb.literal(BigDecimal.ZERO)),
 			cb.selectCase()
-				.when(cb.equal(root.get(LedgerEntry_.ledger).get(Ledger_.type), BalanceType.Debit), root.get(LedgerEntry_.amount))
+				.when(cb.equal(root.get(LedgerEntry_.ledger).get(Ledger_.type), BalanceType.Credit), root.get(LedgerEntry_.amount))
 				.otherwise(cb.literal(BigDecimal.ZERO)),
 			root.get(LedgerEntry_.lastBalance)
 		);

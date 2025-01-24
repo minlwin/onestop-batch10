@@ -6,7 +6,7 @@ export type AppTableColumn = {
     name?:string
     fieldName:string
     link? : (id:string) => string
-    convert? : (key:string[]) => string
+    convert? : (key:any[]) => any
     className?:string
 }
 
@@ -42,26 +42,7 @@ export function TableView({columns, rows, footer}: {
                 <Table.Row key={rowIndex}>
                 {columns.map((col, colIndex) =>(
                     <Table.Cell className={col.fieldName !== 'seq' ?  col.className : 'text-end w-10'} key={colIndex}>
-                        {col.link && (
-                            <Link href={col.link(row[col.fieldName])}>
-                                <PiArrowRightBold />
-                            </Link>
-                        )}
-                        <>
-                        {col.convert && (
-                            <span>{col.convert([row[col.fieldName]])}</span>
-                        )}
-                        </>
-                        <>
-                        {!col.link && !col.convert && (
-                            <span>{format(row[col.fieldName])}</span>
-                        )}    
-                        </>
-                        <>
-                        {col.fieldName === 'seq' && (
-                            <span>{`${rowIndex + 1}`}</span>
-                        )}    
-                        </>
+                        {getCellValue(col, rowIndex, row)}
                     </Table.Cell>
                 ))}    
                 </Table.Row>
@@ -80,4 +61,28 @@ export function TableView({columns, rows, footer}: {
             </Table.Body>
         </Table>
     )
+}
+
+function getCellValue(col : AppTableColumn, index : number, row : AppTableRow) {
+
+    if(col.fieldName === 'seq') {
+        return <span>{`${index + 1}`}</span>
+    }
+
+    if(col.link) {
+        return (
+            <Link href={col.link(row[col.fieldName])}>
+                <PiArrowRightBold />
+            </Link>
+        )
+    }
+
+    if(col.convert) {
+        const array = col.fieldName.split(',').map(field => row[field])
+        return (
+            <span>{format(col.convert(array))}</span>
+        )
+    }
+
+    return format(row[col.fieldName])
 }

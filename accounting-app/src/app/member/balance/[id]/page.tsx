@@ -84,27 +84,9 @@ export default function Page({params}:PathParam<{id:string}>) {
 }
 
 const COLUMNS : AppTableColumn [] = [
-    {
-        fieldName : 'seq',
-    },
-    {
-        fieldName : 'itemName',
-        name : 'Item'
-    },
-    {
-        fieldName : 'quantity',
-        name : 'Quantity',
-        className: 'text-end'
-    },
-    {
-        fieldName : 'unitPrice',
-        name : 'Unit Price',
-        className: 'text-end'
-    },
-    {
-        fieldName : 'total',
-        name : 'Total',
-        className : 'text-end'
-    },
-
+    { fieldName : 'seq' },
+    { fieldName : 'itemName', name : 'Item' },
+    { fieldName : 'unitPrice', name : 'Unit Price', className: 'text-end' },
+    { fieldName : 'quantity', name : 'Quantity', className: 'text-end' },
+    { fieldName : 'total', name : 'Total', className : 'text-end' },
 ]

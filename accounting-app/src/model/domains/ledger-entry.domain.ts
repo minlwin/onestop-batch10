@@ -44,3 +44,10 @@ export type LedgerEntryForm = {
     useDate : string
     items : Partial<LedgerEntryItem> []
 }
+
+export type LedgerEntryModificationResult = {
+    id : {
+        code : string
+        [key : string] : any
+    }
+}

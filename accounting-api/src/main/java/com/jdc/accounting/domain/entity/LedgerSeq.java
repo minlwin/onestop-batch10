@@ -17,6 +17,6 @@ public class LedgerSeq {
 	private int seqNumber;
 	
 	public LedgerPk next() {
-		return new LedgerPk(memberId, seqNumber + 1);
+		return new LedgerPk(memberId, ++ seqNumber);
 	}
 }

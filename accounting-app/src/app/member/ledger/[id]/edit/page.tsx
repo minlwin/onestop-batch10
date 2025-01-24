@@ -24,7 +24,7 @@ export default function Page({params} : {params : Promise<{id : string}>} ) {
     } = useForm<LedgerEditForm>()
 
     useEffect(() => {
-        if(id) {
+        if(id != 'create') {
             const loadData = async () => {
                 const {type, name, description} = await findLedgerByCode(id)
                 setValue('type', type)
@@ -40,7 +40,7 @@ export default function Page({params} : {params : Promise<{id : string}>} ) {
             ? await createLedger(formData)
             : await updateLedger(id, formData)
 
-        router.replace(`/member/ledger/${result.code}/details`)
+        router.replace(`/member/ledger/${result.id.code}/details`)
     }
 
     return (

@@ -38,6 +38,7 @@ function SearchForm() {
 
     const search = async (formData : LedgerSearch) => {
         const result = await searchLedger(formData)
+        console.log(result)
         setList(result)
     }
 
@@ -94,7 +95,8 @@ function ResultList() {
 const COLUMNS : AppTableColumn[] = [
     {fieldName : 'code', name : 'Ledger Code'}, 
     {fieldName : 'name', name : 'Ledger Name'}, 
-    {fieldName : 'deleted', name : 'Status', convert: (value : any) => value == true ? "Deleted" : "Active"}, 
+    {fieldName : 'type', name : 'Ledger Type'}, 
+    {fieldName : 'deleted', name : 'Status', convert: (value : any) => value[0] == true ? "Deleted" : "Active"}, 
     {fieldName : 'description', name : 'Description'}, 
     {fieldName : 'createdAt', name : 'Created At'}, 
     {fieldName : 'code', link : (id) => `/member/ledger/${id}/details`}, 

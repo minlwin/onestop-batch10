@@ -1,7 +1,7 @@
 'use client'
 
 import { useLedgerEntrySearchResult } from "@/model/providers/ledger-entry-search-result.provider"
-import { TableView } from "./table-view"
+import { AppTableColumn, TableView } from "./table-view"
 
 export default function LedgerEntryResults() {
     const {result} = useLedgerEntrySearchResult()
@@ -10,34 +10,12 @@ export default function LedgerEntryResults() {
     )
 }
 
-const COLUMNS = [
-    {
-        name : "ID",
-        fieldName: "id",
-    },
-    {
-        name : "Issue At",
-        fieldName: "issueAt",
-    },
-    {
-        name : "Ledger Code",
-        fieldName: "ledgerCode",
-    },
-    {
-        name : "Ledger Name",
-        fieldName: "ledgerName",
-    },
-    {
-        name : "Particular",
-        fieldName: "particular",
-    },
-    {
-        name : "Amount",
-        fieldName: "amount",
-        className: 'text-end'
-    },
-    {
-        fieldName: "id",
-        link: (id:string) => `/member/balance/${id}`
-    },
+const COLUMNS : AppTableColumn[] = [
+    { name : "ID", fieldName: "code" },
+    { name : "Issue At", fieldName: "issueAt" },
+    { name : "Ledger Code", fieldName: "ledgerCode" },
+    { name : "Ledger Name", fieldName: "ledgerName" },
+    { name : "Particular", fieldName: "particular" },
+    { name : "Amount", fieldName: "amount", className: 'text-end' },
+    { fieldName: "code", link: (id) => `/member/balance/${id}` },
 ]

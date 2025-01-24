@@ -100,7 +100,7 @@ const COLUMNS : AppTableColumn[] = [
         name : 'Registered At'
     },
     {
-        fieldName : 'modifiedAt',
+        fieldName : 'activatedAt',
         name : 'Modified At'
     },
     {

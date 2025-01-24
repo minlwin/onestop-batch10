@@ -19,6 +19,7 @@ export default function LedgerEntrySearchForm() {
 
     const search = async (form:LedgerEntrySearch) => {
         const result = await searchLedgerEntry(form)
+        console.log(result)
         setResult(result)
     }
 

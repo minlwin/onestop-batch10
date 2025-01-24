@@ -16,9 +16,9 @@ import com.jdc.accounting.api.input.LedgerEntrySearch;
 import com.jdc.accounting.api.output.DataModificationResult;
 import com.jdc.accounting.api.output.LedgerEntryInfo;
 import com.jdc.accounting.api.output.PageResult;
-import com.jdc.accounting.aspects.AccessInfo;
 import com.jdc.accounting.domain.embeddable.LedgerEntryPk;
 import com.jdc.accounting.service.LedgerEntryService;
+import com.jdc.accounting.utils.AccessInfo;
 
 import lombok.RequiredArgsConstructor;
 

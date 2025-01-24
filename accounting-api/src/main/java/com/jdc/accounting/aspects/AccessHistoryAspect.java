@@ -1,27 +1,24 @@
 package com.jdc.accounting.aspects;
 
-import org.aopalliance.intercept.Joinpoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.jdc.accounting.service.MemberAccessService;
+import com.jdc.accounting.utils.AccessInfo;
 
 import lombok.RequiredArgsConstructor;
 
 @Aspect
-@Configuration
+@Component
 @RequiredArgsConstructor
 public class AccessHistoryAspect {
 
 	private final MemberAccessService accessService;
 	
-	@Pointcut(value = "within(com.jdc.accounting.api.*)")
-	public void apiMethod() {}
-	
-	@Around(value = "apiMethod() and @annotation(com.jdc.accounting.aspects.AccessInfo)")
-	public Object intercept(Joinpoint joinPoint, AccessInfo info) throws Throwable {
+	@Around("@annotation(info)")
+	public Object intercept(ProceedingJoinPoint joinPoint, AccessInfo info) throws Throwable {
 		
 		var id = accessService.initiate(info);
 		

@@ -16,9 +16,9 @@ import com.jdc.accounting.api.input.LedgerForm;
 import com.jdc.accounting.api.input.LedgerSearch;
 import com.jdc.accounting.api.output.DataModificationResult;
 import com.jdc.accounting.api.output.LedgerInfo;
-import com.jdc.accounting.aspects.AccessInfo;
 import com.jdc.accounting.domain.embeddable.LedgerPk;
 import com.jdc.accounting.service.LedgerManagementService;
+import com.jdc.accounting.utils.AccessInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,7 +51,7 @@ public class LedgerManagementApi {
 	
 	@GetMapping("{id}")
 	@AccessInfo("Find Ledger by id")
-	LedgerInfo findById(String id) {
+	LedgerInfo findById(@PathVariable String id) {
 		return service.findById(id);
 	}
 }

@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdc.accounting.api.input.MemberAccessSearch;
 import com.jdc.accounting.api.output.MemberAccessInfo;
 import com.jdc.accounting.api.output.PageResult;
-import com.jdc.accounting.aspects.AccessInfo;
 import com.jdc.accounting.domain.consts.AccessStatus;
 import com.jdc.accounting.domain.entity.MemberAccessHistory;
 import com.jdc.accounting.domain.entity.MemberAccessHistory_;
 import com.jdc.accounting.domain.repo.MemberAccessHistoryRepo;
+import com.jdc.accounting.utils.AccessInfo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

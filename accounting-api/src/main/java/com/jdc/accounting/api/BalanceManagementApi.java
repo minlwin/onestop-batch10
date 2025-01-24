@@ -10,8 +10,8 @@ import com.jdc.accounting.api.input.BalanceSearch;
 import com.jdc.accounting.api.output.BalanceInfo;
 import com.jdc.accounting.api.output.LedgerEntryDetails;
 import com.jdc.accounting.api.output.PageResult;
-import com.jdc.accounting.aspects.AccessInfo;
 import com.jdc.accounting.service.BalanceManagementService;
+import com.jdc.accounting.utils.AccessInfo;
 
 import lombok.RequiredArgsConstructor;
 

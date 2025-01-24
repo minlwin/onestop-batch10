@@ -2,7 +2,7 @@
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
 import SubTitle from "@/components/sub-title";
-import { TableView } from "@/components/table-view";
+import { AppTableColumn, TableView } from "@/components/table-view";
 import { findLedgerByCode } from "@/model/clients/ledger-client";
 import { searchLedgerEntry } from "@/model/clients/ledger-entry-client";
 import { LedgerEntrySearch } from "@/model/domains/ledger-entry.domain";
@@ -63,7 +63,7 @@ function Ledger() {
                         <PiBookOpen size={36} />
                         <div>
                             <span className="block text-xl">{ledger?.code} {ledger?.type}</span>
-                            <span className="block text-xl">{ledger?.name}</span>
+                            <span className="block">{ledger?.name}</span>
                             <span className="block">{ledger?.deleted ? "Deleted" : "Active"}</span>
                             <span className="block">{ledger?.description}</span>
                         </div>
@@ -73,7 +73,7 @@ function Ledger() {
                         <PiCalendar size={36} />
                         <div>
                             <span className="block text-sm text-gray-500">Created At</span>
-                            <span className="block text-xl">{ledger?.createdAt}</span>
+                            <span className="block">{ledger?.createdAt}</span>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@ function Ledger() {
                         <PiCalendarCheck size={36} />
                         <div>
                             <span className="block text-sm text-gray-500">Modified At</span>
-                            <span className="block text-xl">{ledger?.modifiedAt}</span>
+                            <span className="block">{ledger?.modifiedAt}</span>
                         </div>
                     </div>
 
@@ -160,26 +160,10 @@ function EntryList() {
     )
 }
 
-const COLUMNS = [
-    {
-        name : "ID",
-        fieldName: "id",
-    },
-    {
-        name : "Issue At",
-        fieldName: "issueAt",
-    },
-    {
-        name : "Particular",
-        fieldName: "particular",
-    },
-    {
-        name : "Amount",
-        fieldName: "amount",
-        className: 'text-end'
-    },
-    {
-        fieldName: "id",
-        link: (id:string) => `/member/balance/${id}`
-    },
+const COLUMNS : AppTableColumn[] = [
+    { name : "ID", fieldName: "code" },
+    { name : "Issue At", fieldName: "issueAt" },
+    { name : "Particular", fieldName: "particular" },
+    { name : "Amount", fieldName: "amount", className: 'text-end' },
+    { fieldName: "code", link: (id:string) => `/member/balance/${id}` },
 ]
