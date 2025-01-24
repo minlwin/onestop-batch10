@@ -25,19 +25,26 @@ export default function Page() {
 
 function SearchForm() {
     const {setResult} = useMemberSearchResult()
-    const {register, handleSubmit, getValues} = useForm<MemberSearch>()
+    const {register, handleSubmit} = useForm<MemberSearch>({
+        defaultValues: {
+            activated : undefined,
+            keyword : ''
+        }
+    })
+    
     const search = async (form : MemberSearch) => {
         const result = await searchMember(form)
+        console.log(result)
         setResult(result)
     }
 
     useEffect(() => {
         const loadData = async () => {
-            await search(getValues())
+            await search({})
         }
-
         loadData()
-    }, [getValues])
+    }, [])
+    
     return (
         <form onSubmit={handleSubmit(search)} className="search-form">
             <FormGroup label="Active State" className="w-1/6">
@@ -86,7 +93,7 @@ const COLUMNS : AppTableColumn[] = [
     {
         fieldName : 'activated',
         name : 'Status',
-        convert: (key) => key[0] ? 'Activated' : 'Applied'
+        convert: (key) => key[0] ? 'Activated' : 'Pending'
     },
     {
         fieldName : 'registeredAt',

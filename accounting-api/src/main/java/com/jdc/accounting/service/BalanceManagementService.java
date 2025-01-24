@@ -45,11 +45,11 @@ public class BalanceManagementService {
 		return cb -> {
 			var cq = cb.createQuery(BalanceInfo.class);
             var root = cq.from(LedgerEntry.class);
-            BalanceInfo.select(cq, root);
+            BalanceInfo.select(cb, cq, root);
             cq.where(search.where(cb, root, member.getId()));
             cq.orderBy(
             	cb.asc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.useDate)),
-                cb.asc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.seqNumber))
+                cb.asc(root.get(LedgerEntry_.id).get(LedgerEntryPk_.entryNumber))
             );
             return cq;
 		};

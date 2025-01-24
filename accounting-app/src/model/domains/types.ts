@@ -3,6 +3,8 @@ import { Pager } from "@/components/pagination"
 export type BalanceType = 'Debit' | 'Credit'
 export const BalanceTypes = ['Debit', 'Credit']
 
+export type Role = 'Admin' | 'Member'
+
 export type PathParam<T> = {params: Promise<T>}
 
 export type LayoutParam = {

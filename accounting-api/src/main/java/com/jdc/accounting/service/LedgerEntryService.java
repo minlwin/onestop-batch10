@@ -2,7 +2,6 @@ package com.jdc.accounting.service;
 
 import static com.jdc.accounting.utils.EntityOperationUtils.safeCall;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
@@ -16,7 +15,6 @@ import com.jdc.accounting.api.input.LedgerEntrySearch;
 import com.jdc.accounting.api.output.DataModificationResult;
 import com.jdc.accounting.api.output.LedgerEntryInfo;
 import com.jdc.accounting.api.output.PageResult;
-import com.jdc.accounting.domain.consts.BalanceType;
 import com.jdc.accounting.domain.embeddable.LedgerEntryItemPk;
 import com.jdc.accounting.domain.embeddable.LedgerEntryPk;
 import com.jdc.accounting.domain.embeddable.LedgerPk;
@@ -27,6 +25,7 @@ import com.jdc.accounting.domain.entity.Member;
 import com.jdc.accounting.domain.repo.LedgerEntryItemRepo;
 import com.jdc.accounting.domain.repo.LedgerEntryRepo;
 import com.jdc.accounting.domain.repo.LedgerRepo;
+import com.jdc.accounting.exceptions.ApiBusinessException;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -53,9 +52,8 @@ public class LedgerEntryService {
 		entry.setLedger(ledger);
 		entry.setParticular(form.particular());
 		
+		var amount = form.getAmount();
 		var lastBalance = member.getBalance().getBalance();
-		var amount = form.items().stream().map(item -> item.unitPrice().multiply(BigDecimal.valueOf(item.quantity())))
-				.reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
 		
 		entry.setAmount(amount);
 		entry.setLastBalance(lastBalance);
@@ -64,9 +62,47 @@ public class LedgerEntryService {
 		
 		createItems(entry, form.items());
 		
-		member.getBalance().setBalance(ledger.getType() == BalanceType.Credit ? lastBalance.add(amount) : lastBalance.subtract(amount));
+		member.getBalance().setBalance(entry.getBalance());
 		
 		return new DataModificationResult<LedgerEntryPk>(entry.getId());
+	}
+
+	public DataModificationResult<LedgerEntryPk> update(String code, LedgerEntryForm form) {
+		
+		if(!LedgerEntryPk.canUpdate(code)) {
+			throw new ApiBusinessException("You can't update old data.");
+		}
+		
+		var member = memberService.getLoginUser();
+		var ledger = safeCall(ledgerRepo.findById(LedgerPk.from(member.getId(), form.ledgerCode())), "Ledger", form.ledgerCode());
+
+		var pk = LedgerEntryPk.from(member.getId(), code);
+		
+		var entry = safeCall(entryRepo.findById(pk), "Ledger Entry", code);
+		entry.setLedger(ledger);
+		entry.setParticular(form.particular());
+		entry.setAmount(form.getAmount());
+		
+		entry.getItems().clear();
+		createItems(entry, form.items());
+		
+		var balance = entry.getBalance();
+		
+		var nextEntries = getNextEntries(pk);
+		
+		for(var next : nextEntries) {
+			next.setLastBalance(balance);
+			balance = next.getBalance();
+		}
+		
+		entry.getMember().getBalance().setBalance(balance);
+
+		return new DataModificationResult<LedgerEntryPk>(entry.getId());
+	}
+
+	private List<LedgerEntry> getNextEntries(LedgerEntryPk pk) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private void createItems(LedgerEntry entry, List<LedgerEntryFormItem> items) {
@@ -81,11 +117,6 @@ public class LedgerEntryService {
 			entryItemRepo.save(entity);
 		}
 		
-	}
-
-	public DataModificationResult<LedgerEntryPk> update(String id, LedgerEntryForm form) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Transactional(readOnly = true)

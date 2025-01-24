@@ -2,17 +2,31 @@
 
 import FormGroup from "@/components/form-group";
 import SubTitle from "@/components/sub-title";
+import { memberSignUp } from "@/model/clients/signup-client";
 import { SignUpForm } from "@/model/domains/anonymous.domain";
+import { useSignUpResult } from "@/model/providers/signup-result.provider";
 import { Button, TextInput } from "flowbite-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function Page() {
 
     const {register, handleSubmit, formState: {errors}} = useForm<SignUpForm>()
-    const signUp = (form:SignUpForm) => {
-        console.log(form)
+    const {setMessage} = useSignUpResult()
+    const router = useRouter()
+
+    const signUp = async (form:SignUpForm) => {
+        const resp = await memberSignUp(form)
+
+        setMessage(
+            `Hello ${resp.name}!
+            Admin will active your account soon. Please wait some moment.
+            Thank you for your registration.`)
+
+        router.push('/anonymous/signup/result')
     }
+
     return (
         <form onSubmit={handleSubmit(signUp)}>
             <SubTitle title="Sign Up" />

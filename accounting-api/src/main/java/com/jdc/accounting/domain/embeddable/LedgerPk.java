@@ -20,11 +20,11 @@ public class LedgerPk implements Serializable {
 	@Column(name = "member_id")
 	private UUID memberId;
 	
-	@Column(name = "seq_number")
-	private int seqNumber;
+	@Column(name = "ledger_number")
+	private int ledgerNumber;
 	
 	public String getCode() {
-		return "%04d".formatted(seqNumber);
+		return "%04d".formatted(ledgerNumber);
 	}
 
 	public static LedgerPk from(UUID id, String seq) {

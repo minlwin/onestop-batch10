@@ -20,8 +20,8 @@ public class LedgerEntryItemPk implements Serializable {
 	@Column(name = "use_date")
 	private LocalDate useDate;
 	
-	@Column(name = "seq_number")
-	private int seqNumber;
+	@Column(name = "entry_number")
+	private int entryNumber;
 	
 	@Column(name = "item_number")
 	private int itemNumber;
@@ -30,7 +30,7 @@ public class LedgerEntryItemPk implements Serializable {
 		var pk = new LedgerEntryItemPk();
 		pk.setMemberId(entryId.getMemberId());
 		pk.setUseDate(entryId.getUseDate());
-		pk.setSeqNumber(entryId.getSeqNumber());
+		pk.setEntryNumber(entryId.getEntryNumber());
 		pk.setItemNumber(itemNumber);
 		return pk;
 	}

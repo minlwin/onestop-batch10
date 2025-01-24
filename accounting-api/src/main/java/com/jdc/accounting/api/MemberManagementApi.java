@@ -1,7 +1,5 @@
 package com.jdc.accounting.api;
 
-import java.util.List;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +30,14 @@ public class MemberManagementApi {
 	private final MemberAccessService accessService;
 	
 	@GetMapping
-	List<MemberInfo> search(MemberSearch form) {
-		return managemetService.search(form);
+	PageResult<MemberInfo> search(MemberSearch form, 
+			@RequestParam(required = false, defaultValue = "0") int page, 
+			@RequestParam(required = false, defaultValue = "10") int size) {
+		return managemetService.search(form, page, size);
 	}
 	
 	@PutMapping("{id}")
-	MemberInfo updateStatus(String id, 
+	MemberInfo updateStatus(@PathVariable String id, 
 			@Validated @RequestBody MemberStatusForm form, BindingResult result) {
 		return managemetService.update(id, form);
 	}

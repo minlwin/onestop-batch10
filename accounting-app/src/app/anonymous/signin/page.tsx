@@ -2,7 +2,10 @@
 
 import FormGroup from "@/components/form-group";
 import SubTitle from "@/components/sub-title";
+import { generateToken } from "@/model/clients/token-client";
 import { SignInForm } from "@/model/domains/anonymous.domain";
+import { useAuthentication } from "@/model/stores/authentication-store";
+import { client } from "@/model/utils";
 import { Button, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,16 +15,16 @@ export default function Page() {
 
     const router = useRouter()
     const {register, handleSubmit, formState: {errors}} = useForm<SignInForm>()
+    const {setAuthentication} = useAuthentication()
 
-    const signIn = (form:SignInForm) => {
-        console.log(form)
-        switch(form.password) {
-            case "admin":
-                router.push('/manager')
-                break;
-            default:
-                router.push('/member')
-                break;
+    const signIn = async (form:SignInForm) => {
+        const result = await generateToken(form)
+        setAuthentication(result)
+        
+        if(result.role === 'Admin') {
+            router.push('/manager')
+        } else {
+            router.push('/member')
         }
     }
 

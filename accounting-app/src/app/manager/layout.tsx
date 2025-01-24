@@ -4,7 +4,8 @@ import ActiveMenuProvider, { useActiveMenu } from "@/model/providers/active-menu
 import { LayoutParam } from "@/model/domains/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { MouseEventHandler, useEffect } from "react";
+import { useAuthentication } from "@/model/stores/authentication-store";
 
 export default function Layout({children}:LayoutParam) {
     return (
@@ -28,9 +29,12 @@ function NavBar() {
         document.title = `ADMIN | ${activeMenu?.toUpperCase() || 'HOME'}`
     }, [activeMenu])
 
-    const signOut = () => {
+    const {setAuthentication} = useAuthentication()
+
+    const signOut : MouseEventHandler<HTMLAnchorElement> = (event) => {
+        event.preventDefault()
+        setAuthentication(undefined)
         router.replace('/anonymous/signin')
-        return false
     }
 
     return (

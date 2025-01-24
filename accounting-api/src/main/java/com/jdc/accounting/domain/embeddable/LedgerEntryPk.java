@@ -25,16 +25,21 @@ public class LedgerEntryPk implements Serializable {
 	@Column(name = "use_date")
 	private LocalDate useDate;
 	
-	@Column(name = "seq_number")
-	private int seqNumber;
+	@Column(name = "entry_number")
+	private int entryNumber;
 	
 	private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyyMMdd"); 
 	
 	public String getCode() {
-		return "%s%04d".formatted(useDate.format(DF), seqNumber);
+		return "%s%04d".formatted(useDate.format(DF), entryNumber);
 	}
 	
 	public static LedgerEntryPk from(UUID id, String code) {
 		return new LedgerEntryPk(id, LocalDate.parse(code.substring(0, 8), DF), Integer.parseInt(code.substring(8)));
+	}
+
+	public static boolean canUpdate(String code) {
+		var useDate = LocalDate.parse(code.substring(0, 8), DF);
+		return LocalDate.now().equals(useDate);
 	}
 }

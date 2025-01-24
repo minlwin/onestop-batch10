@@ -49,7 +49,7 @@ export function TableView({columns, rows, footer}: {
                         )}
                         <>
                         {col.convert && (
-                            <span>{col.convert(row[col.fieldName])}</span>
+                            <span>{col.convert([row[col.fieldName]])}</span>
                         )}
                         </>
                         <>

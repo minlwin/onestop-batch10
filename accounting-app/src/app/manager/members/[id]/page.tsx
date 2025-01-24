@@ -2,14 +2,14 @@
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
 import { AppTableColumn, TableView } from "@/components/table-view";
-import { findMemberById, searchMemberAccess } from "@/model/clients/member-client";
+import { findMemberById, searchMemberAccess, updateMemberStatus } from "@/model/clients/member-client";
 import { MemberAccessSearch, MemberAccessSearchResult, MemberInfo } from "@/model/domains/member.domain";
 import { useMemberId } from "@/model/providers/member-id.provider";
 import { Button, Card, ListGroup, ListGroupItem, TextInput } from "flowbite-react";
 import { use, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiSearch } from "react-icons/bi";
-import { PiCalendar, PiEnvelope, PiFlag, PiLock, PiPhone, PiShield, PiUser } from "react-icons/pi";
+import { PiCalendar, PiCheck, PiEnvelope, PiFlag, PiLock, PiPhone, PiShield, PiUser } from "react-icons/pi";
 
 export default function Page({params} : {params : Promise<{id : string}>}) {
     
@@ -47,6 +47,16 @@ function Profile() {
         loadData()
     }, [memberId])
 
+    const updateStatus = async () => {
+        if(profile) {
+            const resp = await updateMemberStatus(profile.id, {
+                status : !profile.activated
+            })
+
+            setProfile(resp)
+        }
+    }
+
     return (
         <Card id="profile" className="w-1/4" imgSrc="/profile.png">
             <ListGroup>
@@ -77,9 +87,11 @@ function Profile() {
                 </ListGroupItem>
             </ListGroup>
 
-            <Button>
+            <Button onClick={updateStatus}>
                 <div className="flex items-center gap-2">
-                    <PiLock /> Suspend
+                    {profile?.activated ? 
+                    <><PiLock /> Suspend</> : 
+                    <><PiCheck /> Activate</>}
                 </div>
             </Button>
         </Card>

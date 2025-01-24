@@ -32,3 +32,7 @@ export type MemberAccessInfo = {
 }
 
 export type MemberAccessSearchResult = SearchResult<MemberAccessInfo>
+
+export type MemberStatusForm = {
+    status : boolean
+}
