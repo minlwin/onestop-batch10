@@ -30,7 +30,6 @@ public class LedgerEntryManagementApi {
 	private final LedgerEntryService service;
 
 	@GetMapping
-	@AccessInfo("Search Ledger Entry")
 	PageResult<LedgerEntryInfo> search(LedgerEntrySearch search, 
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {

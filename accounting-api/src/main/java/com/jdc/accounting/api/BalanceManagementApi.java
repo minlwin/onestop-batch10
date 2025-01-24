@@ -11,7 +11,6 @@ import com.jdc.accounting.api.output.BalanceInfo;
 import com.jdc.accounting.api.output.LedgerEntryDetails;
 import com.jdc.accounting.api.output.PageResult;
 import com.jdc.accounting.service.BalanceManagementService;
-import com.jdc.accounting.utils.AccessInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +22,6 @@ public class BalanceManagementApi {
 	private final BalanceManagementService service;
 
 	@GetMapping
-	@AccessInfo("Search Balance")
 	PageResult<BalanceInfo> search(BalanceSearch search, 
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {
@@ -31,7 +29,6 @@ public class BalanceManagementApi {
 	}
 	
 	@GetMapping("{id}")
-	@AccessInfo("Find Balance Details")
 	LedgerEntryDetails findBalanceDetails(@PathVariable String id) {
 		return service.findById(id);
 	}

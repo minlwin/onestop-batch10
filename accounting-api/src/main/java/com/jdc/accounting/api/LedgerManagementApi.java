@@ -30,7 +30,6 @@ public class LedgerManagementApi {
 	private final LedgerManagementService service;
 
 	@GetMapping
-	@AccessInfo("Search Ledger")
 	List<LedgerInfo> search(LedgerSearch form) {
 		return service.search(form);
 	}
@@ -50,7 +49,6 @@ public class LedgerManagementApi {
 	}
 	
 	@GetMapping("{id}")
-	@AccessInfo("Find Ledger by id")
 	LedgerInfo findById(@PathVariable String id) {
 		return service.findById(id);
 	}
