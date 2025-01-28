@@ -5,11 +5,12 @@ import Pagination from "@/components/pagination";
 import { AppTableColumn, TableView } from "@/components/table-view";
 import { searchMember } from "@/model/clients/member-client";
 import { MemberSearch } from "@/model/domains/member.domain";
+import { useDefaultPageResult } from "@/model/domains/types";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { MemberSearchResultProvider, useMemberSearchResult } from "@/model/providers/member-search-result.provider";
 import { PaginationProvider, usePagination } from "@/model/providers/pagination.provider";
 import { Button, Select, TextInput } from "flowbite-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { BiSearch } from "react-icons/bi";
 
@@ -36,37 +37,30 @@ function SearchForm() {
             activated : undefined,
             keyword : '',
             page : 0,
-            size : 3
+            size : 10
         }
     })
     
     const search = async (form : MemberSearch) => {
         const result = await searchMember(form)
-        console.log(result)
         setResult(result)
     }
 
     useEffect(() => {
-        const loadData = async () => {
-            await search(getValues())
-        }
+        const loadData = async () => await search(getValues())
         loadData()
     }, [])
 
     useEffect(() => {
         setValue('page', page)
-        const loadData = async () => {
-            await search(getValues())
-        }
+        const loadData = async () => await search(getValues())
         loadData()
     }, [page])
 
     useEffect(() => {
         setValue('page', 0)
         setValue('size', size)
-        const loadData = async () => {
-            await search(getValues())
-        }
+        const loadData = async () => await search(getValues())
         loadData()
     }, [size])
 
@@ -98,10 +92,11 @@ function SearchForm() {
 
 function ResultTable() {
     const {result} = useMemberSearchResult()
+    const {contents, ...pager} = useMemo(() => result || useDefaultPageResult(), [result])
     return (
         <>
-        <TableView columns={COLUMNS} rows={result?.contents || []} />
-        {result && <Pagination pager={result} />}
+        <TableView columns={COLUMNS} rows={contents} />
+        {result && <Pagination pager={pager} />}
         </>
     )
 }

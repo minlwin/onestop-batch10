@@ -23,9 +23,7 @@ export default function Page() {
             <PageTitle title="Ledger Management" />
 
             <LedgerMasterProvider>
-                {/* Search Form */}
                 <SearchForm />
-                {/* Result List */}
                 <ResultList />
             </LedgerMasterProvider>
         </>

@@ -1,12 +1,14 @@
 'use client'
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
+import Pagination from "@/components/pagination";
 import { AppTableColumn, TableView } from "@/components/table-view";
 import { searchBalance } from "@/model/clients/balance-client";
 import { BalanceSearch } from "@/model/domains/balances.domain";
 import { BalanceType } from "@/model/domains/types";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { BalanceResultProvider, useBalanceResult } from "@/model/providers/balance-search-result.provider";
+import { PaginationProvider, usePagination } from "@/model/providers/pagination.provider";
 import { Button, TextInput } from "flowbite-react";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -22,16 +24,24 @@ export default function Page() {
     return (
         <BalanceResultProvider>
             <PageTitle title="Balance Report" />
-            <SearchForm />
-            <ResultList />
+            <PaginationProvider>
+                <SearchForm />
+                <ResultList />
+            </PaginationProvider>
         </BalanceResultProvider>
     )
 }
 
 function SearchForm() {
 
-    const form = useForm<BalanceSearch>()
+    const form = useForm<BalanceSearch>({
+        defaultValues: {
+            page: 0,
+            size: 10
+        }
+    })
     const {setResult} = useBalanceResult()
+    const {page, size} = usePagination()
     
     const search = async (formData:BalanceSearch) => {
         const result = await searchBalance(formData)
@@ -44,6 +54,25 @@ function SearchForm() {
         }
         load()
     }, [form])
+
+    useEffect(() => {
+        form.setValue('page', page)
+        const load = async () => {
+            await search(form.getValues())
+        }
+        load()
+    }, [page])
+
+    useEffect(() => {
+        form.setValue('page', 0)
+        form.setValue('size', size)
+
+        const load = async () => {
+            await search(form.getValues())
+        }
+        load()
+    }, [size])
+
 
     return (
         <form className="search-form" onSubmit={form.handleSubmit(search)}>
@@ -67,7 +96,7 @@ function SearchForm() {
 
 function ResultList() {
     const {result} = useBalanceResult()
-    const [contents, pagination] = useMemo(() => {
+    const [contents, pager] = useMemo(() => {
         if(result) {
             const {contents, ... pager} = result
             return [contents, pager]
@@ -80,6 +109,7 @@ function ResultList() {
             {/* Result Table */}
             <TableView columns={COLUMNS} rows={contents || []} />
             {/* Pagination */}
+            {pager && <Pagination pager={pager} />}
         </>
     )
 }

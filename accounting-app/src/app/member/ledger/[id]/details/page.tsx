@@ -1,17 +1,20 @@
 'use client'
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
+import Pagination from "@/components/pagination";
 import SubTitle from "@/components/sub-title";
 import { AppTableColumn, TableView } from "@/components/table-view";
 import { findLedgerByCode } from "@/model/clients/ledger-client";
 import { searchLedgerEntry } from "@/model/clients/ledger-entry-client";
 import { LedgerEntrySearch } from "@/model/domains/ledger-entry.domain";
 import { LedgerInfo } from "@/model/domains/ledger.domain";
+import { useDefaultPageResult } from "@/model/domains/types";
 import { useLedgerCode } from "@/model/providers/ledger-code.provider";
 import { LedgerEntryResultProvider, useLedgerEntrySearchResult } from "@/model/providers/ledger-entry-search-result.provider";
+import { PaginationProvider, usePagination } from "@/model/providers/pagination.provider";
 import { Button, Card, TextInput } from "flowbite-react";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiSearch } from "react-icons/bi";
 import { PiBookOpen, PiCalendar, PiCalendarCheck, PiPencil } from "react-icons/pi";
@@ -30,8 +33,10 @@ export default function Page({params} : {params : Promise<{id : string}>}) {
                 <Ledger />
                 <div className="flex-grow">
                     <LedgerEntryResultProvider>
-                        <EntrySearch />
-                        <EntryList />
+                        <PaginationProvider>
+                            <EntrySearch />
+                            <EntryList />
+                        </PaginationProvider>
                     </LedgerEntryResultProvider>
                 </div>
             </div>
@@ -101,23 +106,30 @@ function EntrySearch() {
 
     const { ledgerCode } = useLedgerCode()
     const { register, handleSubmit, setValue, getValues } = useForm<LedgerEntrySearch>()
-    const { setResult }= useLedgerEntrySearchResult()
-
-    useEffect(() => {
-        setValue('code', ledgerCode)
-
-        const load = async () => {
-            search(getValues())
-        } 
-
-        load()
-    }, [ledgerCode, setValue, getValues])
+    const { setResult } = useLedgerEntrySearchResult()
+    const { page, size } = usePagination()
 
     const search = async (formData : LedgerEntrySearch) => {
         console.log(formData)
         const response = await searchLedgerEntry(formData)
         setResult(response)
     }
+
+    useEffect(() => {
+        setValue('code', ledgerCode)
+        search(getValues())
+    }, [ledgerCode, setValue, getValues])
+
+    useEffect(() => {
+        setValue('page', page)
+        search(getValues())
+    }, [page])
+
+    useEffect(() => {
+        setValue('page', 0)
+        setValue('size', size)
+        search(getValues())
+    }, [size])
 
     return (
         <>
@@ -151,11 +163,12 @@ function EntrySearch() {
 
 function EntryList() {
     const { result } = useLedgerEntrySearchResult()
+    const { contents, ...pager} = useMemo(() => result || useDefaultPageResult(), [result])
+    
     return (
         <>
-        {result && 
-            <TableView columns={COLUMNS} rows={result?.contents || []} />
-        }
+            <TableView columns={COLUMNS} rows={contents} />
+            <Pagination pager={pager} />
         </>
     )
 }

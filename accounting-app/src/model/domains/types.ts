@@ -21,3 +21,13 @@ export type PageSearch = {
 export type SearchResult<T> = {
     contents : T[]
 } & Pager
+
+export function useDefaultPageResult():SearchResult<any> {
+    return {
+        contents: [],
+        links : [],
+        currentPage: 0,
+        totalItems : 0,
+        totalPages : 0
+    }
+}

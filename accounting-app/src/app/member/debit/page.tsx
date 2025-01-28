@@ -5,6 +5,7 @@ import PageTitle from "@/components/page-title";
 import { useActiveMenu } from "@/model/providers/active-menu.provider";
 import { useBalanceType } from "@/model/providers/balance-type.provider";
 import { LedgerEntryResultProvider } from "@/model/providers/ledger-entry-search-result.provider";
+import { PaginationProvider } from "@/model/providers/pagination.provider";
 import { useEffect } from "react";
 
 export default function Page() {
@@ -19,8 +20,10 @@ export default function Page() {
     return (
         <LedgerEntryResultProvider>
             <PageTitle title="Debit Management" />
-            <LedgerEntrySearchForm />
-            <LedgerEntryResults />
+            <PaginationProvider>
+                <LedgerEntrySearchForm />
+                <LedgerEntryResults />
+            </PaginationProvider>
         </LedgerEntryResultProvider>
     )
 }

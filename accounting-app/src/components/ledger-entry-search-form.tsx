@@ -10,12 +10,16 @@ import { useLedgerEntrySearchResult } from "@/model/providers/ledger-entry-searc
 import { searchLedgerEntry } from "@/model/clients/ledger-entry-client"
 import { Button, TextInput } from "flowbite-react"
 import { LedgerEntrySearch } from "@/model/domains/ledger-entry.domain"
+import { usePagination } from "@/model/providers/pagination.provider"
 
 export default function LedgerEntrySearchForm() {
 
-    const {register, handleSubmit, setValue, getValues} = useForm<LedgerEntrySearch>()
-    const {type} = useBalanceType()
-    const {setResult} = useLedgerEntrySearchResult()
+    const {register, handleSubmit, setValue, getValues} = useForm<LedgerEntrySearch>({defaultValues: {
+        page: 0, size: 10
+    }})
+    const { type } = useBalanceType()
+    const { setResult } = useLedgerEntrySearchResult()
+    const { page, size } = usePagination()
 
     const search = async (form:LedgerEntrySearch) => {
         const result = await searchLedgerEntry(form)
@@ -26,15 +30,20 @@ export default function LedgerEntrySearchForm() {
     useEffect(() => {
         if(type) {
             setValue('type', type)
-
-            const load = async() => {
-                const result = await searchLedgerEntry(getValues())
-                setResult(result)
-            }
-
-            load()
+            search(getValues())
         }
     }, [setResult, setValue, getValues, type])
+
+    useEffect(() => {
+        setValue('page', page)
+        search(getValues())
+    }, [page])
+
+    useEffect(() => {
+        setValue('page', 0)
+        setValue('size', size)
+        search(getValues())
+    }, [size])
 
     return (
         <form onSubmit={handleSubmit(search)} className="search-form">

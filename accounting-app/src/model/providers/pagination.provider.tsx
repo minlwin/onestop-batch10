@@ -12,7 +12,7 @@ const PaginationContext = createContext<PaginationContextType | undefined>(undef
 
 function PaginationProvider({children} : ProviderParam) {
     const [page, setPage] = useState<number | undefined>(0)
-    const [size, setSize] = useState<number | undefined>(3)
+    const [size, setSize] = useState<number | undefined>(10)
     return (
         <PaginationContext.Provider value={{page, setPage, size, setSize}}>
             {children}

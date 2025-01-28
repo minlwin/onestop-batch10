@@ -8,22 +8,25 @@ export default function Pagination({pager}: {pager: Pager}) {
 
     return (
         <nav className="flex gap-2 mt-4">
-            <Button onClick={() => setPage(0)}>
-                <PiArrowLeft />
-            </Button>
-            {pager.links.map((page) => (
-                <Button onClick={() => setPage(page)} className={pager.currentPage === page ? 'bg-slate-100 text-slate-700' : ''}>
-                    {`${page + 1}`}
-                </Button>
-            ))}
-            <Button onClick={() => setPage(pager.totalPages - 1)}>
-                <PiArrowRight />
-            </Button>
-
+            {pager.totalPages > 1 && 
+                <>
+                    <Button onClick={() => setPage(0)}>
+                        <PiArrowLeft />
+                    </Button>
+                    {pager.links.map((page) => (
+                        <Button onClick={() => setPage(page)} className={pager.currentPage === page ? 'bg-slate-100 text-slate-700' : ''}>
+                            {`${page + 1}`}
+                        </Button>
+                    ))}
+                    <Button onClick={() => setPage(pager.totalPages - 1)}>
+                        <PiArrowRight />
+                    </Button>
+                </>
+            }
             <Select onChange={(event) => setSize(Number.parseInt(event.target.value))}>
-                <option value="1">1</option>
-                <option value="3" selected>3</option>
-                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
             </Select>
         </nav>
     )

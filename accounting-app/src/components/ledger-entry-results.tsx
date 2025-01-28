@@ -2,11 +2,18 @@
 
 import { useLedgerEntrySearchResult } from "@/model/providers/ledger-entry-search-result.provider"
 import { AppTableColumn, TableView } from "./table-view"
+import { useMemo } from "react"
+import Pagination from "./pagination"
+import { useDefaultPageResult } from "@/model/domains/types"
 
 export default function LedgerEntryResults() {
-    const {result} = useLedgerEntrySearchResult()
+    const { result } = useLedgerEntrySearchResult()
+    const { contents, ... pager} = useMemo(() => result || useDefaultPageResult(), [result])
     return (
-        <TableView columns={COLUMNS} rows={result?.contents || []} />
+        <>
+            <TableView columns={COLUMNS} rows={contents || []} />
+            {pager && <Pagination pager={pager} />}
+        </>
     )
 }
 

@@ -5,10 +5,11 @@ import Pagination from "@/components/pagination";
 import { AppTableColumn, TableView } from "@/components/table-view";
 import { findMemberById, searchMemberAccess, updateMemberStatus } from "@/model/clients/member-client";
 import { MemberAccessSearch, MemberAccessSearchResult, MemberInfo } from "@/model/domains/member.domain";
+import { useDefaultPageResult } from "@/model/domains/types";
 import { useMemberId } from "@/model/providers/member-id.provider";
 import { PaginationProvider, usePagination } from "@/model/providers/pagination.provider";
 import { Button, Card, ListGroup, ListGroupItem, TextInput } from "flowbite-react";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiSearch } from "react-icons/bi";
 import { PiCalendar, PiCheck, PiEnvelope, PiFlag, PiLock, PiPhone, PiShield, PiUser } from "react-icons/pi";
@@ -105,37 +106,34 @@ function Profile() {
 function AccessHistory() {
 
     const [result, setResult] = useState<MemberAccessSearchResult>()
+    const { contents, ...pager } = useMemo(() => result || useDefaultPageResult(), [result])
     const { memberId } = useMemberId() 
-    const { register, handleSubmit, getValues, setValue } = useForm<MemberAccessSearch>() 
+    const { register, handleSubmit, getValues, setValue } = useForm<MemberAccessSearch>({defaultValues : {
+        page : 0,
+        size : 10
+    }}) 
     const { page, size } = usePagination()
 
     const search = async (formData : MemberAccessSearch) => {
-        const response = await searchMemberAccess(memberId!, formData)
-        setResult(response)
+        if(memberId) {
+            const response = await searchMemberAccess(memberId, formData)
+            setResult(response)
+        }
     }
 
     useEffect(() => {
-        if(memberId) {
-            const loadData = async () => await search(getValues()) 
-            loadData()
-        } 
+        search(getValues()) 
     }, [memberId, getValues])
 
     useEffect(() => {
         setValue('page', page)
-        if(memberId) {
-            const loadData = async () => await search(getValues()) 
-            loadData()
-        } 
+        search(getValues()) 
     }, [page])
 
     useEffect(() => {
         setValue('page', 0)
         setValue('size', size)
-        if(memberId) {
-            const loadData = async () => await search(getValues()) 
-            loadData()
-        } 
+        search(getValues()) 
     }, [size])
 
     return (
@@ -163,32 +161,16 @@ function AccessHistory() {
                 </div>
             </form>   
 
-            <TableView columns={COLUMNS} rows={result?.contents || []} />
-
-            {result && <Pagination pager={result} />}
+            <TableView columns={COLUMNS} rows={contents} />
+            <Pagination pager={pager} />
         </section>
     )
 }
 
 const COLUMNS : AppTableColumn [] = [
-    {
-        fieldName : 'accessAt',
-        name : "Access At"
-    },
-    {
-        fieldName : 'endAt',
-        name : "Finished At"
-    },
-    {
-        fieldName : 'activity',
-        name : "Activity"
-    },
-    {
-        fieldName : 'status',
-        name : "Status"
-    },
-    {
-        fieldName : 'message',
-        name : "Message"
-    },
+    { fieldName : 'accessAt', name : "Access At" },
+    { fieldName : 'endAt', name : "Finished At" },
+    { fieldName : 'activity', name : "Activity" },
+    { fieldName : 'status', name : "Status" },
+    { fieldName : 'message', name : "Message" },
 ]
