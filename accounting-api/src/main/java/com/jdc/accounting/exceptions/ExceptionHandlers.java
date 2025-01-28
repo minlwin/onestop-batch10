@@ -24,6 +24,7 @@ public class ExceptionHandlers {
 	})
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	List<String> handle(ApiBaseException e) {
+		log.error("Business Exception", e);
 		return e.getMessages();
 	}
 	

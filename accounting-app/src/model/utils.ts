@@ -28,10 +28,10 @@ client.interceptors.request.use(request => {
 client.interceptors.response.use(response => response, async (error) => {
 
     const originalRequest = error.config
+    const {authentication, setAuthentication} = useAuthentication.getState()
 
     if(error.response.status == 410 && !originalRequest._retry) {
         originalRequest._retry = true
-        const {authentication, setAuthentication} = useAuthentication.getState()
 
         if(authentication) {
 
@@ -52,6 +52,7 @@ client.interceptors.response.use(response => response, async (error) => {
     }
 
     if(error.response.status == 401) {
+        setAuthentication(undefined)
         window.location.href = '/anonymous/signin'
         return
     }

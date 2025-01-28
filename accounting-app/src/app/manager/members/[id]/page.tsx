@@ -1,10 +1,12 @@
 'use client'
 import FormGroup from "@/components/form-group";
 import PageTitle from "@/components/page-title";
+import Pagination from "@/components/pagination";
 import { AppTableColumn, TableView } from "@/components/table-view";
 import { findMemberById, searchMemberAccess, updateMemberStatus } from "@/model/clients/member-client";
 import { MemberAccessSearch, MemberAccessSearchResult, MemberInfo } from "@/model/domains/member.domain";
 import { useMemberId } from "@/model/providers/member-id.provider";
+import { PaginationProvider, usePagination } from "@/model/providers/pagination.provider";
 import { Button, Card, ListGroup, ListGroupItem, TextInput } from "flowbite-react";
 import { use, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -26,7 +28,9 @@ export default function Page({params} : {params : Promise<{id : string}>}) {
             
             <div className="flex items-start gap-8 mt-4">
                 <Profile />
-                <AccessHistory  />
+                <PaginationProvider>
+                    <AccessHistory  />
+                </PaginationProvider>
             </div>
         </>
     )
@@ -102,7 +106,8 @@ function AccessHistory() {
 
     const [result, setResult] = useState<MemberAccessSearchResult>()
     const { memberId } = useMemberId() 
-    const { register, handleSubmit, getValues } = useForm<MemberAccessSearch>() 
+    const { register, handleSubmit, getValues, setValue } = useForm<MemberAccessSearch>() 
+    const { page, size } = usePagination()
 
     const search = async (formData : MemberAccessSearch) => {
         const response = await searchMemberAccess(memberId!, formData)
@@ -115,6 +120,23 @@ function AccessHistory() {
             loadData()
         } 
     }, [memberId, getValues])
+
+    useEffect(() => {
+        setValue('page', page)
+        if(memberId) {
+            const loadData = async () => await search(getValues()) 
+            loadData()
+        } 
+    }, [page])
+
+    useEffect(() => {
+        setValue('page', 0)
+        setValue('size', size)
+        if(memberId) {
+            const loadData = async () => await search(getValues()) 
+            loadData()
+        } 
+    }, [size])
 
     return (
         <section className="h-full flex-grow">
@@ -142,6 +164,8 @@ function AccessHistory() {
             </form>   
 
             <TableView columns={COLUMNS} rows={result?.contents || []} />
+
+            {result && <Pagination pager={result} />}
         </section>
     )
 }

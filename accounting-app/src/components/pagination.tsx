@@ -1,19 +1,30 @@
+import { usePagination } from "@/model/providers/pagination.provider"
+import { Button, Select } from "flowbite-react"
+import { PiArrowLeft, PiArrowRight } from "react-icons/pi"
+
 export default function Pagination({pager}: {pager: Pager}) {
+
+    const {setPage, setSize} = usePagination()
+
     return (
-        <nav aria-label="Page navigation example">
-            <ul className="pagination">
-                <li className={`page-item ${pager.currentPage <= 1 ? 'disabled' : ''}`}>
-                    <a className="page-link" href="#" tabIndex={-1} aria-disabled="true">Previous</a>
-                </li>
-                {pager.links.map((page) => (
-                    <li key={page} className={`page-item ${pager.currentPage === page ? 'active' : ''}`}>
-                        <a className="page-link" href="#">{page}</a>
-                    </li>
-                ))}
-                <li className={`page-item ${pager.currentPage >= pager.totalPages ? 'disabled' : ''}`}>
-                    <a className="page-link" href="#">Next</a>
-                </li>
-            </ul>
+        <nav className="flex gap-2 mt-4">
+            <Button onClick={() => setPage(0)}>
+                <PiArrowLeft />
+            </Button>
+            {pager.links.map((page) => (
+                <Button onClick={() => setPage(page)} className={pager.currentPage === page ? 'bg-slate-100 text-slate-700' : ''}>
+                    {`${page + 1}`}
+                </Button>
+            ))}
+            <Button onClick={() => setPage(pager.totalPages - 1)}>
+                <PiArrowRight />
+            </Button>
+
+            <Select onChange={(event) => setSize(Number.parseInt(event.target.value))}>
+                <option value="1">1</option>
+                <option value="3" selected>3</option>
+                <option value="5">5</option>
+            </Select>
         </nav>
     )
 

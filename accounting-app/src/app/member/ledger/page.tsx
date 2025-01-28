@@ -55,7 +55,7 @@ function SearchForm() {
             <FormGroup label="Status">
                 <Select {...register('deleted')}>
                     <option value="">All Status</option>
-                    <option value="fase">Active</option>
+                    <option value="false">Active</option>
                     <option value="true">Deleted</option>
                 </Select>
             </FormGroup>
